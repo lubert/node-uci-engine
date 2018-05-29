@@ -1,0 +1,33 @@
+{
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "parser": "typescript-eslint-parser",
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaFeatures": {
+          "modules": true
+      }
+    },
+    "rules": {
+        "quotes": [
+            "error",
+            "double",
+            {
+                "avoidEscape": true,
+                "allowTemplateLiterals": true
+            }
+        ],
+        "eol-last": [
+            "error",
+            "always"
+        ],
+        "no-var": "error",
+        "typescript/no-unused-vars": "error",
+        "keyword-spacing": "error"
+    },
+    "plugins": [
+        "typescript"
+    ]
+}

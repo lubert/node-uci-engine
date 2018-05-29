@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "commonjs",
+        "outDir": "dist",
+        "declaration": true,
+        "removeComments": true,
+        "strict": true,
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true
+    },
+    "include": [
+        "src/**/*.*",
+        "test/**/*.*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "engine"
+    ]
+}
