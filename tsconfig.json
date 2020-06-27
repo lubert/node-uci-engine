@@ -13,7 +13,9 @@
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
         "noImplicitAny": true,
-        "noImplicitThis": true
+        "noImplicitThis": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
     "include": [
         "src/**/*.*",
