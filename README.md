@@ -7,13 +7,25 @@ Library for automating analysis with UCI-compatible chess engines
 ## Installation
 
 ```bash
-npm install node-uci-engine
+npm install @lubert/node-uci-engine
 ```
 
 ## Usage
 
 ```javascript
-// TODO
+import { Engine, Position, Resolution } from '@lubert/node-uci-engine';
+
+const engine = new Engine('/path/to/your/engine');
+const position = new Position("r1bqkb1r/5ppp/p2ppn2/1pn5/3NP3/1BN5/PPP2PPP/R1BQR1K1 w kq - 4 10");
+const resolution = new DepthResolution(15);
+engine.analyzePosition(
+    position,
+    resolution,
+    (result) => {
+        ...
+    }
+);
+
 ```
 
 ## Contributing
