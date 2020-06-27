@@ -1,6 +1,7 @@
 import { Move } from "../Analysis/Move";
 import { Line } from "../Analysis/Line";
 import { Evaluation } from "../Analysis/Evaluation";
+import { IEngineOption } from "../Engine/IEngineOption";
 
 /**
  * @class Parser {
@@ -104,11 +105,34 @@ export class Parser {
      * @param {string} output
      * @return {number|null}
      */
-    public static parseEvaluation(output: string) : number | null {
+    public static parseEvaluation(output: string): number | null {
         const matches = output.match(/cp\s([-\d+]+)/);
 
         if (matches !== null) {
             return parseFloat(matches[1]);
+        }
+
+        return null;
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {IEngineOption|null}
+     */
+    public static parseOption(output: string): IEngineOption | null {
+        const matches = output.match(/option\sname\s(.+)\stype\s(\S+)(?:\sdefault\s(\S+)?)?(?:\smin\s(\S+))?(?:\smax\s(\S+))?/);
+
+        if (matches !== null) {
+            return {
+                name: matches[1],
+                type: matches[2],
+                default: matches[3],
+                min: matches[4],
+                max: matches[5],
+            };
         }
 
         return null;
