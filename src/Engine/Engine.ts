@@ -8,6 +8,7 @@ import { Position } from "../Analysis/Position";
 import { Result } from "../Analysis/Result";
 import { IEngineOption } from "./IEngineOption";
 import { OptionEvent } from "src/Event/OptionEvent";
+import { IEngineConfig } from "./IEngineConfig";
 
 /**
  * @class Engine
@@ -108,7 +109,7 @@ export class Engine {
      * @param {Function} callback
      * @return {void}
      */
-    public start(callback: (options: IEngineOption[]) => void): void {
+    public start(callback: (options: IEngineOption[]) => void, config?: IEngineConfig): void {
         if (this.isStarted) {
             callback(this.options);
         } else {
@@ -118,6 +119,13 @@ export class Engine {
                 const optEvent = event as OptionEvent;
                 this.options.push(optEvent.getOption());
             });
+
+            if (config) {
+                Object.entries(config).forEach(([key, value]) => {
+                    this.process.execute(`setoption name ${key} value ${value}`);
+                });
+            }
+
             this.on("ready", () => callback(this.options));
         }
     }
