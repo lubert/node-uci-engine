@@ -9,9 +9,9 @@ describe("Parser", (): void => {
             expect(result).to.deep.eq({
                 name: "Debug Log File",
                 type: "string",
-                default: undefined,
-                max: undefined,
-                min: undefined,
+                default: null,
+                max: null,
+                min: null,
             });
         });
 
@@ -21,8 +21,8 @@ describe("Parser", (): void => {
                 name: "Ponder",
                 type: "check",
                 default: "false",
-                max: undefined,
-                min: undefined,
+                max: null,
+                min: null,
             });
         });
 
