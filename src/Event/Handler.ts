@@ -8,6 +8,8 @@ import { Line } from "../Analysis/Line";
 import { BestMoveEvent } from "./BestMoveEvent";
 import { OutputEvent } from "./OutputEvent";
 import { Parser } from "../Uci/Parser";
+import { IEngineOption } from "src/Engine/IEngineOption";
+import { OptionEvent } from "./OptionEvent";
 
 /**
  * @class Handler
@@ -30,6 +32,11 @@ export class Handler extends EventEmitter {
 
         if (Parser.parseBestMove(output)) {
             return this.emitEvent(new BestMoveEvent);
+        }
+
+        const option: IEngineOption | null = Parser.parseOption(output);
+        if (option !== null) {
+            return this.emitEvent(new OptionEvent(option));
         }
 
         const line: Line | null = Parser.parseLine(output);
