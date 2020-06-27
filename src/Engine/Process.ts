@@ -29,9 +29,9 @@ export class Process {
      */
     public execute(command: string, ...options: string[]): void {
         if (options.length > 0) {
-            this.child.stdin.write(`${command} ${options.join(" ")}${EOL}`);
+            this.child.stdin?.write(`${command} ${options.join(" ")}${EOL}`);
         } else {
-            this.child.stdin.write(`${command}${EOL}`);
+            this.child.stdin?.write(`${command}${EOL}`);
         }
     }
 
@@ -42,7 +42,7 @@ export class Process {
      * @return {void}
      */
     public listen(callback: (output: string) => void): void {
-        this.child.stdout.on("data", function(this: Process, data: string[]): void {
+        this.child.stdout?.on("data", function(this: Process, data: string[]): void {
             const output: string[] = data.toString().split(EOL).filter(x => x);
 
             for (let i = 0, length = output.length; i < length; i++) {
