@@ -1,6 +1,6 @@
 {
   "name": "@lubert/node-uci-engine",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Library for automating analysis with UCI-compatible chess engines",
   "homepage": "https://github.com/lubert/node-uci-engine#readme",
   "author": "Thibaut Vandenbussche <thibaut@vandenbussche.co>",
