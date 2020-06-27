@@ -5,7 +5,7 @@
 export interface IEngineOption {
     name: string;
     type: string;
-    default?: string;
-    min?: string;
-    max?: string;
+    default: string | null;
+    min: string | null;
+    max: string | null;
 }

@@ -129,9 +129,9 @@ export class Parser {
             return {
                 name: matches[1],
                 type: matches[2],
-                default: matches[3],
-                min: matches[4],
-                max: matches[5],
+                default: matches[3] || null,
+                min: matches[4] || null,
+                max: matches[5] || null,
             };
         }
 

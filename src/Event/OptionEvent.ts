@@ -12,7 +12,7 @@ export class OptionEvent extends Event {
      * @param {IEngineOption} option
      */
     constructor(protected option: IEngineOption) {
-        super("output");
+        super("option");
 
         this.option = option;
     }
