@@ -4,7 +4,7 @@ import { Parser } from "../src";
 
 describe("Parser", (): void => {
     describe("parseOption", (): void => {
-        it("missing default", (): void => {
+        it("no default", (): void => {
             const result = Parser.parseOption('option name Debug Log File type string default');
             expect(result).to.deep.eq({
                 name: "Debug Log File",
