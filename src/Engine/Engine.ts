@@ -6,6 +6,8 @@ import { Handler } from "../Event/Handler";
 import { Process } from "./Process";
 import { Position } from "../Analysis/Position";
 import { Result } from "../Analysis/Result";
+import { IEngineOption } from "./IEngineOption";
+import { OptionEvent } from "src/Event/OptionEvent";
 
 /**
  * @class Engine
@@ -26,6 +28,12 @@ export class Engine {
 
     /**
      * @protected
+     * @type {IEngineOption[]}
+     */
+    protected options: IEngineOption[];
+
+    /**
+     * @protected
      * @type {boolean}
      */
     protected isStarted: boolean;
@@ -37,6 +45,7 @@ export class Engine {
     constructor(path: string) {
         this.process = new Process(path);
         this.handler = new Handler();
+        this.options = [];
         this.isStarted = false;
 
         this.process.listen((output: string) => {
@@ -59,8 +68,9 @@ export class Engine {
     ): void {
         let lastAnalysis: Analysis | undefined;
 
-        this.on("evaluation", (event: EvaluationEvent): void => {
-            lastAnalysis = event.getAnalysis();
+        this.on("evaluation", (event: Event): void => {
+            const evalEvent = event as EvaluationEvent;
+            lastAnalysis = evalEvent.getAnalysis();
         });
 
         this.on("bestmove", (): void => {
@@ -73,7 +83,7 @@ export class Engine {
             }
         });
 
-        this.start((): void => {
+        this.start((options: IEngineOption[]): void => {
             this.process.execute(position.getInput());
             this.process.execute(`go ${resolution.getInput()}`);
         });
@@ -93,27 +103,31 @@ export class Engine {
     }
 
     /**
-     * @protected
+     * @public
      * @method
      * @param {Function} callback
      * @return {void}
      */
-    protected start(callback: () => void): void {
+    public start(callback: (options: IEngineOption[]) => void): void {
         if (this.isStarted) {
-            callback();
+            callback(this.options);
         } else {
+            this.options = [];
             this.process.execute("uci");
-
-            this.on("ready", callback);
+            this.on("option", (event: Event): void => {
+                const optEvent = event as OptionEvent;
+                this.options.push(optEvent.getOption());
+            });
+            this.on("ready", () => callback(this.options));
         }
     }
 
     /**
-     * @protected
+     * @public
      * @method
      * @return {void}
      */
-    protected stop(): void {
+    public stop(): void {
         this.process.execute("quit");
     }
 }
