@@ -1,12 +1,22 @@
 import "mocha";
 import { expect } from "chai";
-import { DepthResolution } from "../src/Analysis/Resolution/DepthResolution";
-import { Engine } from "../src/Engine/Engine";
-import { Result } from "../src/Analysis/Result";
-import { Position } from "../src/Analysis/Position";
+import { DepthResolution } from "../../src/Analysis/Resolution/DepthResolution";
+import { Engine } from "../../src/Engine/Engine";
+import { Result } from "../../src/Analysis/Result";
+import { Position } from "../../src/Analysis/Position";
 
-describe("Analysis", (): void => {
-    const engine = new Engine("./engine/stockfish_8_x64");
+let supported = false;
+let path = '';
+if (process.platform === "darwin") {
+    path = "./engine/stockfish_11_mac_x64"
+    supported = true;
+} else if (process.platform === "linux") {
+    path = "./engine/stockfish_11_linux_x64"
+    supported = true;
+}
+
+(supported ? describe : describe.skip)("Analysis", (): void => {
+    const engine = new Engine(path);
     const position = new Position("r1bqkb1r/5ppp/p2ppn2/1pn5/3NP3/1BN5/PPP2PPP/R1BQR1K1 w kq - 4 10");
     const resolution = new DepthResolution(15);
 

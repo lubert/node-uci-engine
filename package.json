@@ -10,7 +10,7 @@
     "scripts": {
         "build": "tsc",
         "lint": "eslint src --ext ts",
-        "test": "mocha --exit --colors --recursive --require ts-node/register test/**/*.ts"
+        "test": "mocha --exit --colors --recursive --require ts-node/register --extension ts"
     },
     "devDependencies": {
         "@types/chai": "^4.1.3",
