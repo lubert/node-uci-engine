@@ -9,18 +9,30 @@ import { SearchConfig } from "src/Engine/SearchConfig";
 export class Result {
     /**
      * @constructor
+     * @param {string} bestMove
      * @param {Position} position
      * @param {SearchConfig} config
      * @param {Analysis} analysis
      */
     constructor(
+        protected bestMove: string,
         protected position: Position,
         protected config: SearchConfig,
         protected analysis: Analysis
     ) {
+        this.bestMove = bestMove;
         this.position = position;
         this.config = config;
         this.analysis = analysis;
+    }
+
+    /**
+     * @public
+     * @method
+     * @return {string}
+     */
+    public getBestMove(): string {
+        return this.bestMove;
     }
 
     /**

@@ -81,7 +81,9 @@ export class Engine {
             this.stop();
             removeListener();
             if (lastAnalysis !== undefined) {
-                const result = new Result(position, config, lastAnalysis);
+                const result = new Result(
+                    bestMove.getBestMove(), position, config, lastAnalysis
+                );
                 callback(result);
             }
         });
@@ -94,7 +96,11 @@ export class Engine {
      * @param {Function} evalCallback
      * @return {void}
      */
-    public go(position: Position, config: SearchConfig, callback: (bestMove: BestMoveEvent) => void): void {
+    public go(
+        position: Position,
+        config: SearchConfig,
+        callback: (bestMove: BestMoveEvent) => void
+    ): void {
         this.once("bestmove", (event: Event): void => {
             const bestMoveEvent = event as BestMoveEvent;
             callback(bestMoveEvent);
