@@ -15,8 +15,19 @@ export class Parser {
      * @param {string} output
      * @return {boolean}
      */
-    public static parseIsReady(output: string): boolean {
+    public static parseUciOk(output: string): boolean {
         return output === "uciok";
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {boolean}
+     */
+    public static parseIsReady(output: string): boolean {
+        return output === "readyok";
     }
 
     /**

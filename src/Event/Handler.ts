@@ -10,6 +10,7 @@ import { OutputEvent } from "./OutputEvent";
 import { Parser } from "../Uci/Parser";
 import { IEngineOption } from "src/Engine/IEngineOption";
 import { OptionEvent } from "./OptionEvent";
+import { UciOkEvent } from "./UciOkEvent";
 
 /**
  * @class Handler
@@ -28,6 +29,10 @@ export class Handler extends EventEmitter {
 
         if (Parser.parseIsReady(output)) {
             return this.emitEvent(new ReadyEvent);
+        }
+
+        if (Parser.parseUciOk(output)) {
+            return this.emitEvent(new UciOkEvent);
         }
 
         const bestMove = Parser.parseBestMove(output);
