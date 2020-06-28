@@ -30,8 +30,9 @@ export class Handler extends EventEmitter {
             return this.emitEvent(new ReadyEvent);
         }
 
-        if (Parser.parseBestMove(output)) {
-            return this.emitEvent(new BestMoveEvent);
+        const bestMove = Parser.parseBestMove(output);
+        if (bestMove !== null) {
+            return this.emitEvent(new BestMoveEvent(...bestMove));
         }
 
         const option: IEngineOption | null = Parser.parseOption(output);

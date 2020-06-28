@@ -54,11 +54,11 @@ export class Parser {
      * @param {string} output
      * @return {string|null}
      */
-    public static parseBestMove(output: string): string | null {
-        const matches = output.match(/^bestmove\s([a-h][1-8][a-h][1-8])/);
+    public static parseBestMove(output: string): [string, string | null] | null {
+        const matches = output.match(/^bestmove\s([a-h][1-8][a-h][1-8])(?:\sponder\s([a-h][1-8][a-h][1-8]))?/);
 
         if (matches !== null) {
-            return matches[1];
+            return [matches[1], matches[2] || null];
         }
 
         return null;
