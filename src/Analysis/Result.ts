@@ -1,6 +1,6 @@
 import { Analysis } from "./Analysis";
 import { Position } from "./Position";
-import { GoConfig } from "src/Engine/GoConfig";
+import { SearchConfig } from "src/Engine/SearchConfig";
 
 /**
  * @class Result
@@ -10,12 +10,12 @@ export class Result {
     /**
      * @constructor
      * @param {Position} position
-     * @param {GoConfig} config
+     * @param {SearchConfig} config
      * @param {Analysis} analysis
      */
     constructor(
         protected position: Position,
-        protected config: GoConfig,
+        protected config: SearchConfig,
         protected analysis: Analysis
     ) {
         this.position = position;
@@ -35,9 +35,9 @@ export class Result {
     /**
      * @public
      * @method
-     * @return {GoConfig}
+     * @return {SearchConfig}
      */
-    public getConfig(): GoConfig {
+    public getConfig(): SearchConfig {
         return this.config;
     }
 
