@@ -84,7 +84,7 @@ export class Engine {
             }
         });
 
-        this.start((options: IEngineOption[]): void => {
+        this.start((): void => {
             this.process.execute(position.getInput());
             this.process.execute(`go ${resolution.getInput()}`);
         });

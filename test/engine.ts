@@ -19,15 +19,17 @@ describe("Engine", () => {
                 '@noCallThru': true,
             });
             const engine = new Engine('fake');
+            sinon.stub(engine, 'getOptions').callsFake((callback) => callback());
+
             const config: IEngineConfig = {
                 'Ponder': 'true',
                 'MultiPV': '4',
             }
             engine.start(null, config);
             expect(executeSpy.args).to.deep.eq([
-                ["uci"],
                 ["setoption name Ponder value true"],
                 ["setoption name MultiPV value 4"],
+                ["isready"]
             ]);
         });
     });

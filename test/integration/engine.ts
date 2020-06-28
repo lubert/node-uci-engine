@@ -13,7 +13,7 @@ describe("Engine", (): void => {
     it("should recieve engine options", (done: Function): void => {
         const engine = new Engine(enginePath);
 
-        engine.start(
+        engine.getOptions(
             (options: IEngineOption[]): void => {
                 expect(options).to.deep.eq(engineOptions);
                 done();
