@@ -1,5 +1,4 @@
 import { Event } from "../Event/Event";
-import { Resolution } from "../Analysis/Resolution/Resolution";
 import { Analysis } from "../Analysis/Analysis";
 import { EvaluationEvent } from "../Event/EvaluationEvent";
 import { Handler } from "../Event/Handler";
@@ -10,6 +9,7 @@ import { IEngineOption } from "./IEngineOption";
 import { OptionEvent } from "src/Event/OptionEvent";
 import { BestMoveEvent } from "src/Event/BestMoveEvent";
 import { EngineConfig } from "./EngineConfig";
+import { GoConfig } from "./GoConfig";
 
 type EventCallback = (event: Event) => void;
 
@@ -61,13 +61,13 @@ export class Engine {
      * @public
      * @method
      * @param {Position} position
-     * @param {Resolution} resolution
+     * @param {GoConfig} config
      * @param {Function} callback
      * @return {void}
      */
     public analyzePosition(
         position: Position,
-        resolution: Resolution,
+        config: GoConfig,
         callback: (result: Result) => void
     ): void {
         let lastAnalysis: Analysis | undefined;
@@ -77,11 +77,11 @@ export class Engine {
             lastAnalysis = evalEvent.getAnalysis();
         });
 
-        this.go(position, resolution, (bestMove) => {
+        this.go(position, config, (bestMove) => {
             this.stop();
             removeListener();
             if (lastAnalysis !== undefined) {
-                const result = new Result(position, resolution, lastAnalysis);
+                const result = new Result(position, config, lastAnalysis);
                 callback(result);
             }
         });
@@ -94,14 +94,14 @@ export class Engine {
      * @param {Function} evalCallback
      * @return {void}
      */
-    public go(position: Position, resolution: Resolution, callback: (bestMove: BestMoveEvent) => void): void {
+    public go(position: Position, config: GoConfig, callback: (bestMove: BestMoveEvent) => void): void {
         this.once("bestmove", (event: Event): void => {
             const bestMoveEvent = event as BestMoveEvent;
             callback(bestMoveEvent);
         });
 
-        this.process.execute(`position fen ${position.getFen()}`);
-        this.process.execute(`go ${resolution.getInput()}`);
+        this.process.execute(position.getCommand());
+        this.process.execute(config.getCommand());
     }
 
     /**

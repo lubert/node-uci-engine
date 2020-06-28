@@ -1,6 +1,6 @@
-import { Analysis}  from "./Analysis";
-import { Position }  from "./Position";
-import { Resolution } from "./Resolution/Resolution";
+import { Analysis } from "./Analysis";
+import { Position } from "./Position";
+import { GoConfig } from "src/Engine/GoConfig";
 
 /**
  * @class Result
@@ -10,16 +10,16 @@ export class Result {
     /**
      * @constructor
      * @param {Position} position
-     * @param {Resolution} resolution
+     * @param {GoConfig} config
      * @param {Analysis} analysis
      */
     constructor(
         protected position: Position,
-        protected resolution: Resolution,
+        protected config: GoConfig,
         protected analysis: Analysis
     ) {
         this.position = position;
-        this.resolution = resolution;
+        this.config = config;
         this.analysis = analysis;
     }
 
@@ -35,10 +35,10 @@ export class Result {
     /**
      * @public
      * @method
-     * @return {Resolution}
+     * @return {GoConfig}
      */
-    public getResolution(): Resolution {
-        return this.resolution;
+    public getConfig(): GoConfig {
+        return this.config;
     }
 
     /**

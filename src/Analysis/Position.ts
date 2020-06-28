@@ -1,11 +1,8 @@
-import { IOption } from "../Console/IOption";
-
 /**
  * @class Position
- * @implements IOption
  * @module Position
  */
-export class Position implements IOption {
+export class Position {
     /**
      * @constructor
      * @param {string} fen
@@ -28,7 +25,7 @@ export class Position implements IOption {
      * @function
      * @returns {string}
      */
-    public getInput(): string {
+    public getCommand(): string {
         return `position fen ${this.fen}`;
     }
 }
