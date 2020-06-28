@@ -2,4 +2,4 @@ dist/
 node_modules/
 .idea/
 .eslintcache
-.npm
+.nyc_output
