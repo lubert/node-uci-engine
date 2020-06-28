@@ -10,6 +10,8 @@ import { IEngineOption } from "./IEngineOption";
 import { OptionEvent } from "src/Event/OptionEvent";
 import { IEngineConfig } from "./IEngineConfig";
 
+type EventCallback = (event: Event) => void;
+
 /**
  * @class Engine
  * @module Engine
@@ -69,13 +71,14 @@ export class Engine {
     ): void {
         let lastAnalysis: Analysis | undefined;
 
-        this.on("evaluation", (event: Event): void => {
+        const removeListener = this.on("evaluation", (event: Event): void => {
             const evalEvent = event as EvaluationEvent;
             lastAnalysis = evalEvent.getAnalysis();
         });
 
-        this.on("bestmove", (): void => {
+        this.once("bestmove", (): void => {
             this.stop();
+            removeListener();
 
             if (lastAnalysis !== undefined) {
                 const result = new Result(position, resolution, lastAnalysis);
@@ -96,17 +99,31 @@ export class Engine {
      * @param {Function} callback
      * @return {void}
      */
-    public getOptions(callback: (options: IEngineOption[]) => void) {
+    public getOptions(callback: (options: IEngineOption[]) => void): void {
         this.options = [];
         this.process.execute("uci");
-        this.on("option", (event: Event): void => {
+
+        const removeListener = this.on("option", (event: Event) => {
             const optEvent = event as OptionEvent;
             this.options.push(optEvent.getOption());
         });
 
-        this.on("uciok", () => {
+        this.once("uciok", () => {
             callback(this.options);
+            removeListener();
         });
+    }
+
+    /**
+     * @public
+     * @method
+     * @param {string} name
+     * @param {Function} callback
+     * @return {Function} removeListener
+     */
+    public on(name: string, callback: EventCallback): Function {
+        this.handler.on(name, callback);
+        return () => this.handler.removeListener(name, callback);
     }
 
     /**
@@ -116,10 +133,8 @@ export class Engine {
      * @param {Function} callback
      * @return {void}
      */
-    public on(name: string, callback: (event: Event) => void): void {
-        this.handler.on(name, (event: Event): void => {
-            callback(event);
-        });
+    public once(name: string, callback: EventCallback): void {
+        this.handler.once(name, callback);
     }
 
     /**
@@ -132,7 +147,7 @@ export class Engine {
         if (this.isStarted) {
             callback();
         } else {
-            this.on("ready", () => {
+            this.once("ready", () => {
                 this.isStarted = true;
                 callback();
             });
