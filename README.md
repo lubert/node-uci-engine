@@ -2,6 +2,7 @@
 
 Library for automating analysis with UCI-compatible chess engines
 
+![npm](https://img.shields.io/npm/v/@lubert/node-uci-engine)
 [![Build Status](https://travis-ci.org/lubert/node-uci-engine.svg?branch=master)](https://travis-ci.org/lubert/node-uci-engine)
 
 ## Installation
