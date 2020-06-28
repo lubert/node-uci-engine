@@ -9,6 +9,7 @@ import { Result } from "../Analysis/Result";
 import { IEngineOption } from "./IEngineOption";
 import { OptionEvent } from "src/Event/OptionEvent";
 import { IEngineConfig } from "./IEngineConfig";
+import { BestMoveEvent } from "src/Event/BestMoveEvent";
 
 type EventCallback = (event: Event) => void;
 
@@ -76,21 +77,31 @@ export class Engine {
             lastAnalysis = evalEvent.getAnalysis();
         });
 
-        this.once("bestmove", (): void => {
+        this.go(position, resolution, (bestMove) => {
             this.stop();
             removeListener();
-
             if (lastAnalysis !== undefined) {
                 const result = new Result(position, resolution, lastAnalysis);
-
                 callback(result);
             }
         });
+    }
 
-        this.start((): void => {
-            this.process.execute(position.getInput());
-            this.process.execute(`go ${resolution.getInput()}`);
+    /**
+     * @public
+     * @method
+     * @param {Function} callback
+     * @param {Function} evalCallback
+     * @return {void}
+     */
+    public go(position: Position, resolution: Resolution, callback: (bestMove: BestMoveEvent) => void): void {
+        this.once("bestmove", (event: Event): void => {
+            const bestMoveEvent = event as BestMoveEvent;
+            callback(bestMoveEvent);
         });
+
+        this.process.execute(`position fen ${position.getFen()}`);
+        this.process.execute(`go ${resolution.getInput()}`);
     }
 
     /**
