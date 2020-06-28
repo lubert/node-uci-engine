@@ -93,6 +93,25 @@ export class Engine {
     /**
      * @public
      * @method
+     * @param {Function} callback
+     * @return {void}
+     */
+    public getOptions(callback: (options: IEngineOption[]) => void) {
+        this.options = [];
+        this.process.execute("uci");
+        this.on("option", (event: Event): void => {
+            const optEvent = event as OptionEvent;
+            this.options.push(optEvent.getOption());
+        });
+
+        this.on("uciok", () => {
+            callback(this.options);
+        });
+    }
+
+    /**
+     * @public
+     * @method
      * @param {string} name
      * @param {Function} callback
      * @return {void}
@@ -109,24 +128,23 @@ export class Engine {
      * @param {Function} callback
      * @return {void}
      */
-    public start(callback: (options: IEngineOption[]) => void, config?: IEngineConfig): void {
+    public start(callback: () => void, config?: IEngineConfig): void {
         if (this.isStarted) {
-            callback(this.options);
+            callback();
         } else {
-            this.options = [];
-            this.process.execute("uci");
-            this.on("option", (event: Event): void => {
-                const optEvent = event as OptionEvent;
-                this.options.push(optEvent.getOption());
+            this.on("ready", () => {
+                this.isStarted = true;
+                callback();
             });
 
-            if (config) {
-                Object.entries(config).forEach(([key, value]) => {
-                    this.process.execute(`setoption name ${key} value ${value}`);
-                });
-            }
-
-            this.on("ready", () => callback(this.options));
+            this.getOptions(() => {
+                if (config) {
+                    Object.entries(config).forEach(([key, value]) => {
+                        this.process.execute(`setoption name ${key} value ${value}`);
+                    });
+                }
+                this.process.execute("isready");
+            });
         }
     }
 
