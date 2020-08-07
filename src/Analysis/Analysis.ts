@@ -41,4 +41,13 @@ export class Analysis {
     public getLine(): Line | null {
         return this.line;
     }
+
+    /**
+     * @public
+     * @method
+     * @return {IAnalysisParams}
+     */
+    public getParams(): IAnalysisParams {
+        return this.params;
+    }
 }
