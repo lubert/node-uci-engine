@@ -1,30 +1,44 @@
 import { Line } from "./Line";
-import { Status, IStatusParams } from "./Status";
+
+/**
+ * @interface IAnalysisParams
+ * @module IAnalysisParams
+ */
+export interface IAnalysisParams {
+    depth: number | null;
+    seldepth: number | null;
+    time: number | null;
+    nodes: number | null;
+    multipv: number | null;
+    currmove: string | null;
+    currmovenumber: number | null;
+    hashfull: number | null;
+    nps: number | null;
+}
 
 /**
  * @class Analysis
  * @module Analysis
  */
-export class Analysis extends Status {
+export class Analysis {
     /**
      * @constructor
-     * @param {IStatusParams} params
+     * @param {IAnalysisParams} params
      * @param {Line} line
      */
     constructor(
-        protected params: IStatusParams,
-        protected line: Line,
+        protected params: IAnalysisParams,
+        protected line: Line | null,
     ) {
-        super(params);
         this.line = line;
     }
 
     /**
      * @public
      * @method
-     * @return {Line}
+     * @return {Line|null}
      */
-    public getLine(): Line {
+    public getLine(): Line | null {
         return this.line;
     }
 }

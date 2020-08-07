@@ -1,5 +1,4 @@
-export { Analysis } from "./Analysis/Analysis";
-export { Status, IStatusParams } from "./Analysis/Status";
+export { Analysis, IAnalysisParams } from "./Analysis/Analysis";
 export { Line } from "./Analysis/Line";
 export { Score } from "./Analysis/Score";
 export { Move } from "./Analysis/Move";
@@ -15,5 +14,4 @@ export { BestMoveEvent } from "./Event/BestMoveEvent";
 export { EvaluationEvent } from "./Event/EvaluationEvent";
 export { OutputEvent } from "./Event/OutputEvent";
 export { ReadyEvent } from "./Event/ReadyEvent";
-export { StatusEvent } from "./Event/StatusEvent";
 export { Parser } from "./Uci/Parser";

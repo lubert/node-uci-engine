@@ -74,7 +74,9 @@ export class Engine {
 
         const removeListener = this.on("evaluation", (event: Event): void => {
             const evalEvent = event as EvaluationEvent;
-            lastAnalysis = evalEvent.getAnalysis();
+            if (evalEvent.getAnalysis().getLine() !== null) {
+                lastAnalysis = evalEvent.getAnalysis();
+            }
         });
 
         this.go(position, config, (bestMove) => {

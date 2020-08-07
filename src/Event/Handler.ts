@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import { ReadyEvent } from "./ReadyEvent";
-import { Analysis } from "../Analysis/Analysis";
+import { Analysis, IAnalysisParams } from "../Analysis/Analysis";
 import { EvaluationEvent } from "./EvaluationEvent";
 import { Event } from "./Event";
 import { Line } from "../Analysis/Line";
@@ -10,8 +10,6 @@ import { Parser } from "../Uci/Parser";
 import { IEngineOption } from "src/Engine/IEngineOption";
 import { OptionEvent } from "./OptionEvent";
 import { UciOkEvent } from "./UciOkEvent";
-import { StatusEvent } from "./StatusEvent";
-import { Status, IStatusParams } from "../Analysis/Status";
 
 /**
  * @class Handler
@@ -49,7 +47,7 @@ export class Handler extends EventEmitter {
         if (output.startsWith('info')) {
             const moves = Parser.parseMoves(output);
             const score = Parser.parseScore(output);
-            const params: IStatusParams = {
+            const params: IAnalysisParams = {
                 depth: Parser.parseDepth(output),
                 time: Parser.parseTime(output),
                 multipv: Parser.parseMultiPv(output),
@@ -60,15 +58,9 @@ export class Handler extends EventEmitter {
                 currmove: Parser.parseCurrmove(output),
                 currmovenumber: Parser.parseCurrmoveNumber(output),
             };
-
-            if (moves && score) {
-                const line = new Line(score, moves);
-                const analysis = new Analysis(params, line);
-                return this.emitEvent(new EvaluationEvent(analysis));
-            }
-
-            const status = new Status(params);
-            return this.emitEvent(new StatusEvent(status));
+            const line = moves && score ? new Line(score, moves) : null;
+            const analysis = new Analysis(params, line);
+            return this.emitEvent(new EvaluationEvent(analysis));
         }
     }
 
