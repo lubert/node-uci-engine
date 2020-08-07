@@ -35,6 +35,28 @@ export class Parser {
      * @static
      * @method
      * @param {string} output
+     * @return {Move[]|null}
+     */
+    public static parseMoves(output: string): Move[] | null {
+        const matches = output.match(/info.*pv\s([a-h1-8\s]+)$/)
+
+        if (matches !== null) {
+            let moves: Move[] = [];
+            const parts = matches[1].split(" ");
+            for (let i = 0, length = parts.length; i < length; i++) {
+                moves.push(new Move(parts[i]));
+            }
+            return moves;
+        }
+
+        return null;
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
      * @return {Line|null}
      */
     public static parseLine(output: string): Line | null {
