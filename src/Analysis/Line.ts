@@ -1,5 +1,5 @@
-import { Evaluation } from "./Evaluation";
 import { Move } from "./Move";
+import { Score } from "./Score";
 
 /**
  * @class Line
@@ -8,21 +8,21 @@ import { Move } from "./Move";
 export class Line {
     /**
      * @constructor
-     * @param {Evaluation} evaluation
+     * @param {Score} score
      * @param {Move[]} moves
      */
-    constructor(protected evaluation: Evaluation, protected moves: Move[]) {
-        this.evaluation = evaluation;
+    constructor(protected score: Score, protected moves: Move[]) {
+        this.score = score;
         this.moves = moves;
     }
 
     /**
      * @public
      * @method
-     * @return {Evaluation}
+     * @return {Score}
      */
-    public getEvaluation(): Evaluation {
-        return this.evaluation;
+    public getScore(): Score {
+        return this.score;
     }
 
     /**
