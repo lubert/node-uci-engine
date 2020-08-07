@@ -1,34 +1,22 @@
-import { Evaluation } from "./Evaluation";
 import { Line } from "./Line";
+import { Status, IStatusParams } from "./Status";
 
 /**
  * @class Analysis
  * @module Analysis
  */
-export class Analysis {
+export class Analysis extends Status {
     /**
      * @constructor
-     * @param {Evaluation} evaluation
+     * @param {IStatusParams} params
      * @param {Line} line
-     * @param {number} time
      */
     constructor(
-        protected evaluation: Evaluation,
+        protected params: IStatusParams,
         protected line: Line,
-        protected time: number
     ) {
-        this.evaluation = evaluation;
+        super(params);
         this.line = line;
-        this.time = time;
-    }
-
-    /**
-     * @public
-     * @method
-     * @return {Evaluation}
-     */
-    public getEvaluation(): Evaluation {
-        return this.evaluation;
     }
 
     /**
@@ -38,15 +26,5 @@ export class Analysis {
      */
     public getLine(): Line {
         return this.line;
-    }
-
-    /**
-     * Time in milliseconds spent on the analysis.
-     * @public
-     * @method
-     * @return {number}
-     */
-    public getTime(): number {
-        return this.time;
     }
 }

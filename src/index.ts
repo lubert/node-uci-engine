@@ -1,6 +1,7 @@
 export { Analysis } from "./Analysis/Analysis";
-export { Evaluation } from "./Analysis/Evaluation";
+export { Status, IStatusParams } from "./Analysis/Status";
 export { Line } from "./Analysis/Line";
+export { Score } from "./Analysis/Score";
 export { Move } from "./Analysis/Move";
 export { Position } from "./Analysis/Position";
 export { Result } from "./Analysis/Result";

@@ -1,6 +1,5 @@
 import { EventEmitter } from "events";
 import { ReadyEvent } from "./ReadyEvent";
-import { Evaluation } from "../Analysis/Evaluation";
 import { Analysis } from "../Analysis/Analysis";
 import { EvaluationEvent } from "./EvaluationEvent";
 import { Event } from "./Event";
@@ -11,6 +10,8 @@ import { Parser } from "../Uci/Parser";
 import { IEngineOption } from "src/Engine/IEngineOption";
 import { OptionEvent } from "./OptionEvent";
 import { UciOkEvent } from "./UciOkEvent";
+import { StatusEvent } from "./StatusEvent";
+import { Status, IStatusParams } from "../Analysis/Status";
 
 /**
  * @class Handler
@@ -45,24 +46,29 @@ export class Handler extends EventEmitter {
             return this.emitEvent(new OptionEvent(option));
         }
 
-        const line: Line | null = Parser.parseLine(output);
+        if (output.startsWith('info')) {
+            const moves = Parser.parseMoves(output);
+            const score = Parser.parseScore(output);
+            const params: IStatusParams = {
+                depth: Parser.parseDepth(output),
+                time: Parser.parseTime(output),
+                multipv: Parser.parseMultiPv(output),
+                seldepth: Parser.parseSeldepth(output),
+                nodes: Parser.parseNodes(output),
+                nps: Parser.parseNps(output),
+                hashfull: Parser.parseHashfull(output),
+                currmove: Parser.parseCurrmove(output),
+                currmovenumber: Parser.parseCurrmoveNumber(output),
+            };
 
-        if (line !== null) {
-            const depth: number | null = Parser.parseDepth(output);
-
-            if (depth !== null) {
-                const time: number | null = Parser.parseTime(output);
-
-                if (time !== null) {
-                    const evaluation: number | null = Parser.parseEvaluation(output);
-
-                    if (evaluation !== null) {
-                        const analysis = new Analysis(new Evaluation(evaluation, depth), line, time);
-
-                        return this.emitEvent(new EvaluationEvent(analysis));
-                    }
-                }
+            if (moves && score) {
+                const line = new Line(score, moves);
+                const analysis = new Analysis(params, line);
+                return this.emitEvent(new EvaluationEvent(analysis));
             }
+
+            const status = new Status(params);
+            return this.emitEvent(new StatusEvent(status));
         }
     }
 

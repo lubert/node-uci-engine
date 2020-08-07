@@ -1,14 +1,31 @@
 import { Move } from "../Analysis/Move";
-import { Line } from "../Analysis/Line";
-import { Evaluation } from "../Analysis/Evaluation";
+import { Score } from "../Analysis/Score";
 import { IEngineOption } from "../Engine/IEngineOption";
-import { Score } from "src/Analysis/Score";
 
 /**
  * @class Parser {
  * @module Parser {
  */
 export class Parser {
+    /**
+     * @protected
+     * @static
+     * @method
+     * @param {string} output
+     * @param {string} key
+     * @return {number|null}
+     */
+    protected static parseNumber(output: string, key: string): number | null {
+        const re = new RegExp(`${output}\s(\d+)`);
+        const matches = output.match(re);
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
+    }
+
     /**
      * @public
      * @static
@@ -75,35 +92,7 @@ export class Parser {
 
     /**
      * @public
-     * @static
-     * @method
-     * @param {string} output
-     * @return {Line|null}
-     */
-    public static parseLine(output: string): Line | null {
-        const matches = output.match(/info\sdepth\s(\d+).*cp\s([-\d+]+).*\spv\s([a-h1-8\s]+)$/);
-
-        if (matches !== null) {
-            let moves: Move[] = [];
-
-            const parts = matches[3].split(" ");
-
-            for (let i = 0, length = parts.length; i < length; i++) {
-                moves.push(new Move(parts[i]));
-            }
-
-            return new Line(
-                new Evaluation(parseFloat(matches[2]), parseInt(matches[1])),
-                moves
-            );
-        }
-
-        return null;
-    }
-
-    /**
-     * @public
-     * @static
+     * @staticp
      * @method
      * @param {string} output
      * @return {string|null}
@@ -120,19 +109,96 @@ export class Parser {
 
     /**
      * @public
+     * @staticp
+     * @method
+     * @param {string} output
+     * @return {string|null}
+     */
+    public static parseCurrmove(output: string): string | null {
+        const matches = output.match(/currmove\s([a-h][1-8][a-h][1-8])/);
+
+        if (matches !== null) {
+            return matches[1];
+        }
+
+        return null;
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {number|null}
+     */
+    public static parseCurrmoveNumber(output: string): number | null {
+        return Parser.parseNumber(output, 'currmovenumber');
+    }
+
+    /**
+     * @public
      * @static
      * @method
      * @param {string} output
      * @return {number|null}
      */
     public static parseDepth(output: string): number | null {
-        const matches = output.match(/^info\sdepth\s(\d+)/);
+        return Parser.parseNumber(output, '^info\sdepth');
+    }
 
-        if (matches !== null) {
-            return parseInt(matches[1]);
-        }
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {number|null}
+     */
+    public static parseHashfull(output: string): number | null {
+        return Parser.parseNumber(output, 'hashfull');
+    }
 
-        return null;
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {number|null}
+     */
+    public static parseMultiPv(output: string): number | null {
+        return Parser.parseNumber(output, 'multipv');
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {number|null}
+     */
+    public static parseNodes(output: string): number | null {
+        return Parser.parseNumber(output, 'nodes');
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {number|null}
+     */
+    public static parseNps(output: string): number | null {
+        return Parser.parseNumber(output, 'nps');
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {number|null}
+     */
+    public static parseSeldepth(output: string): number | null {
+        return Parser.parseNumber(output, 'seldepth');
     }
 
     /**
@@ -143,30 +209,7 @@ export class Parser {
      * @return {number|null}
      */
     public static parseTime(output: string): number | null {
-        const matches = output.match(/time\s(\d+)/);
-
-        if (matches !== null) {
-            return parseInt(matches[1]);
-        }
-
-        return null;
-    }
-
-    /**
-     * @public
-     * @static
-     * @method
-     * @param {string} output
-     * @return {number|null}
-     */
-    public static parseEvaluation(output: string): number | null {
-        const matches = output.match(/cp\s([-\d+]+)/);
-
-        if (matches !== null) {
-            return parseFloat(matches[1]);
-        }
-
-        return null;
+        return Parser.parseNumber(output, 'time');
     }
 
     /**
