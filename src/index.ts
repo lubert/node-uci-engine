@@ -15,4 +15,5 @@ export { BestMoveEvent } from "./Event/BestMoveEvent";
 export { EvaluationEvent } from "./Event/EvaluationEvent";
 export { OutputEvent } from "./Event/OutputEvent";
 export { ReadyEvent } from "./Event/ReadyEvent";
+export { StatusEvent } from "./Event/StatusEvent";
 export { Parser } from "./Uci/Parser";
