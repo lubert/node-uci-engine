@@ -2,6 +2,7 @@ import { Move } from "../Analysis/Move";
 import { Line } from "../Analysis/Line";
 import { Evaluation } from "../Analysis/Evaluation";
 import { IEngineOption } from "../Engine/IEngineOption";
+import { Score } from "src/Analysis/Score";
 
 /**
  * @class Parser {
@@ -47,6 +48,26 @@ export class Parser {
                 moves.push(new Move(parts[i]));
             }
             return moves;
+        }
+
+        return null;
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {Score|null}
+     */
+    public static parseScore(output: string): Score | null {
+        const matches = output.match(/score\s(\w+)\s([-\d+]+)/);
+
+        if (matches !== null) {
+            return new Score(
+                matches[1],
+                parseInt(matches[2])
+            );
         }
 
         return null;
