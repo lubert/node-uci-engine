@@ -8,25 +8,6 @@ import { IEngineOption } from "../Engine/IEngineOption";
  */
 export class Parser {
     /**
-     * @protected
-     * @static
-     * @method
-     * @param {string} output
-     * @param {string} key
-     * @return {number|null}
-     */
-    protected static parseNumber(output: string, key: string): number | null {
-        const re = new RegExp(`${output}\s(\d+)`);
-        const matches = output.match(re);
-
-        if (matches !== null) {
-            return parseInt(matches[1]);
-        }
-
-        return null;
-    }
-
-    /**
      * @public
      * @static
      * @method
@@ -132,7 +113,13 @@ export class Parser {
      * @return {number|null}
      */
     public static parseCurrmoveNumber(output: string): number | null {
-        return Parser.parseNumber(output, 'currmovenumber');
+        const matches = output.match(/currmovenumber\s(\d+)/)
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
     }
 
     /**
@@ -143,7 +130,13 @@ export class Parser {
      * @return {number|null}
      */
     public static parseDepth(output: string): number | null {
-        return Parser.parseNumber(output, '^info\sdepth');
+        const matches = output.match(/^info\sdepth\s(\d+)/)
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
     }
 
     /**
@@ -154,7 +147,13 @@ export class Parser {
      * @return {number|null}
      */
     public static parseHashfull(output: string): number | null {
-        return Parser.parseNumber(output, 'hashfull');
+        const matches = output.match(/hashfull\s(\d+)/)
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
     }
 
     /**
@@ -165,7 +164,13 @@ export class Parser {
      * @return {number|null}
      */
     public static parseMultiPv(output: string): number | null {
-        return Parser.parseNumber(output, 'multipv');
+        const matches = output.match(/multipv\s(\d+)/)
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
     }
 
     /**
@@ -176,7 +181,13 @@ export class Parser {
      * @return {number|null}
      */
     public static parseNodes(output: string): number | null {
-        return Parser.parseNumber(output, 'nodes');
+        const matches = output.match(/nodes\s(\d+)/)
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
     }
 
     /**
@@ -187,7 +198,13 @@ export class Parser {
      * @return {number|null}
      */
     public static parseNps(output: string): number | null {
-        return Parser.parseNumber(output, 'nps');
+        const matches = output.match(/nps\s(\d+)/)
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
     }
 
     /**
@@ -198,7 +215,13 @@ export class Parser {
      * @return {number|null}
      */
     public static parseSeldepth(output: string): number | null {
-        return Parser.parseNumber(output, 'seldepth');
+        const matches = output.match(/seldepth\s(\d+)/)
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
     }
 
     /**
@@ -209,7 +232,13 @@ export class Parser {
      * @return {number|null}
      */
     public static parseTime(output: string): number | null {
-        return Parser.parseNumber(output, 'time');
+        const matches = output.match(/time\s(\d+)/)
+
+        if (matches !== null) {
+            return parseInt(matches[1]);
+        }
+
+        return null;
     }
 
     /**
