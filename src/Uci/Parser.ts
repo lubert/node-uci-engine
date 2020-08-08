@@ -1,5 +1,4 @@
-import { Move } from "../Analysis/Move";
-import { Score } from "../Analysis/Score";
+import { IScore } from "../Analysis/IScore";
 import { IEngineOption } from "../Engine/IEngineOption";
 
 /**
@@ -34,16 +33,16 @@ export class Parser {
      * @static
      * @method
      * @param {string} output
-     * @return {Move[]|null}
+     * @return {string[]|null}
      */
-    public static parseMoves(output: string): Move[] | null {
+    public static parseMoves(output: string): string[] | null {
         const matches = output.match(/info.*pv\s([a-h1-8\s]+)$/)
 
         if (matches !== null) {
-            let moves: Move[] = [];
+            let moves: string[] = [];
             const parts = matches[1].split(" ");
             for (let i = 0, length = parts.length; i < length; i++) {
-                moves.push(new Move(parts[i]));
+                moves.push(parts[i]);
             }
             return moves;
         }
@@ -58,14 +57,14 @@ export class Parser {
      * @param {string} output
      * @return {Score|null}
      */
-    public static parseScore(output: string): Score | null {
+    public static parseScore(output: string): IScore | null {
         const matches = output.match(/score\s(\w+)\s([-\d+]+)/);
 
         if (matches !== null) {
-            return new Score(
-                matches[1],
-                parseInt(matches[2])
-            );
+            return {
+                type: matches[1],
+                value: parseInt(matches[2]),
+            };
         }
 
         return null;

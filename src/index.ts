@@ -1,7 +1,5 @@
-export { Analysis, IAnalysisParams } from "./Analysis/Analysis";
-export { Line } from "./Analysis/Line";
-export { Score } from "./Analysis/Score";
-export { Move } from "./Analysis/Move";
+export { IAnalysis } from "./Analysis/IAnalysis";
+export { IScore } from "./Analysis/IScore";
 export { Position } from "./Analysis/Position";
 export { Result } from "./Analysis/Result";
 export { Engine } from "./Engine/Engine";

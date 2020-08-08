@@ -22,9 +22,8 @@ describe("Analysis", (): void => {
             (result: Result): void => {
                 expect(result.getBestMove()).to.eq("b3d5");
                 expect(result.getPosition().getFen()).to.eq(position.getFen());
-                expect(result.getAnalysis().getLine()!.getFirstMove().getNotation()).to.eq("b3d5");
-                expect(result.getAnalysis().getLine()!.getScore().getValue()).to.be.greaterThan(100);
-
+                expect(result.getAnalysis().moves![0]).to.eq("b3d5");
+                expect(result.getAnalysis().score!.value).to.be.greaterThan(100);
                 done();
             }
         );

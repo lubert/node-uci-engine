@@ -1,9 +1,8 @@
 import { EventEmitter } from "events";
 import { ReadyEvent } from "./ReadyEvent";
-import { Analysis, IAnalysisParams } from "../Analysis/Analysis";
+import { IAnalysis } from "../Analysis/IAnalysis";
 import { EvaluationEvent } from "./EvaluationEvent";
 import { Event } from "./Event";
-import { Line } from "../Analysis/Line";
 import { BestMoveEvent } from "./BestMoveEvent";
 import { OutputEvent } from "./OutputEvent";
 import { Parser } from "../Uci/Parser";
@@ -45,9 +44,7 @@ export class Handler extends EventEmitter {
         }
 
         if (output.startsWith('info')) {
-            const moves = Parser.parseMoves(output);
-            const score = Parser.parseScore(output);
-            const params: IAnalysisParams = {
+            const analysis: IAnalysis = {
                 depth: Parser.parseDepth(output),
                 time: Parser.parseTime(output),
                 multipv: Parser.parseMultiPv(output),
@@ -57,9 +54,9 @@ export class Handler extends EventEmitter {
                 hashfull: Parser.parseHashfull(output),
                 currmove: Parser.parseCurrmove(output),
                 currmovenumber: Parser.parseCurrmoveNumber(output),
+                moves: Parser.parseMoves(output),
+                score: Parser.parseScore(output),
             };
-            const line = moves && score ? new Line(score, moves) : null;
-            const analysis = new Analysis(params, line);
             return this.emitEvent(new EvaluationEvent(analysis));
         }
     }

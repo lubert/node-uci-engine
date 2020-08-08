@@ -1,5 +1,5 @@
 import { Event } from "../Event/Event";
-import { Analysis } from "../Analysis/Analysis";
+import { IAnalysis } from "../Analysis/IAnalysis";
 import { EvaluationEvent } from "../Event/EvaluationEvent";
 import { Handler } from "../Event/Handler";
 import { Process } from "./Process";
@@ -70,11 +70,11 @@ export class Engine {
         config: SearchConfig,
         callback: (result: Result) => void
     ): void {
-        let lastAnalysis: Analysis | undefined;
+        let lastAnalysis: IAnalysis | undefined;
 
         const removeListener = this.on("evaluation", (event: Event): void => {
             const evalEvent = event as EvaluationEvent;
-            if (evalEvent.getAnalysis().getLine() !== null) {
+            if (evalEvent.getAnalysis().moves !== null) {
                 lastAnalysis = evalEvent.getAnalysis();
             }
         });

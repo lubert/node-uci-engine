@@ -1,5 +1,5 @@
 import { Event } from "./Event";
-import { Analysis } from "../Analysis/Analysis";
+import { IAnalysis } from "../Analysis/IAnalysis";
 
 /**
  * @class EvaluationEvent
@@ -11,7 +11,7 @@ export class EvaluationEvent extends Event {
      * @constructor
      * @param {Analysis} analysis
      */
-    constructor(protected analysis: Analysis) {
+    constructor(protected analysis: IAnalysis) {
         super("evaluation");
 
         this.analysis = analysis;
@@ -20,9 +20,9 @@ export class EvaluationEvent extends Event {
     /**
      * @public
      * @method
-     * @return {Analysis}
+     * @return {IAnalysis}
      */
-    public getAnalysis(): Analysis {
+    public getAnalysis(): IAnalysis {
         return this.analysis;
     }
 }

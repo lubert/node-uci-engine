@@ -1,4 +1,4 @@
-import { Analysis } from "./Analysis";
+import { IAnalysis } from "./IAnalysis";
 import { Position } from "./Position";
 import { SearchConfig } from "src/Engine/SearchConfig";
 
@@ -18,7 +18,7 @@ export class Result {
         protected bestMove: string,
         protected position: Position,
         protected config: SearchConfig,
-        protected analysis: Analysis
+        protected analysis: IAnalysis
     ) {
         this.bestMove = bestMove;
         this.position = position;
@@ -56,9 +56,9 @@ export class Result {
     /**
      * @public
      * @method
-     * @return {Analysis}
+     * @return {IAnalysis}
      */
-    public getAnalysis(): Analysis {
+    public getAnalysis(): IAnalysis {
         return this.analysis;
     }
 }
