@@ -1,7 +1,7 @@
 import "mocha";
 import { expect } from "chai";
 import { Engine } from "../../src/Engine/Engine";
-import { Result } from "../../src/Analysis/Result";
+import { IResult } from "../../src/Analysis/IResult";
 import { enginePath } from "./util";
 
 describe("Analysis", (): void => {
@@ -19,11 +19,11 @@ describe("Analysis", (): void => {
         engine.analyzePosition(
             position,
             resolution,
-            (result: Result): void => {
-                expect(result.getBestMove()).to.eq("b3d5");
-                expect(result.getPosition().fen).to.eq(position.fen);
-                expect(result.getAnalysis().moves![0]).to.eq("b3d5");
-                expect(result.getAnalysis().score!.value).to.be.greaterThan(100);
+            (result: IResult): void => {
+                expect(result.bestMove).to.eq("b3d5");
+                expect(result.position.fen).to.eq(position.fen);
+                expect(result.analysis.moves![0]).to.eq("b3d5");
+                expect(result.analysis.score!.value).to.be.greaterThan(100);
                 done();
             }
         );

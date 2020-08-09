@@ -4,7 +4,7 @@ import { EvaluationEvent } from "../Event/EvaluationEvent";
 import { Handler } from "../Event/Handler";
 import { Process } from "./Process";
 import { IPosition } from "../Analysis/IPosition";
-import { Result } from "../Analysis/Result";
+import { IResult } from "../Analysis/IResult";
 import { IEngineOption } from "./IEngineOption";
 import { OptionEvent } from "src/Event/OptionEvent";
 import { BestMoveEvent } from "src/Event/BestMoveEvent";
@@ -68,7 +68,7 @@ export class Engine {
     public analyzePosition(
         position: IPosition,
         config: ISearchConfig,
-        callback: (result: Result) => void
+        callback: (result: IResult) => void
     ): void {
         let lastAnalysis: IAnalysis | undefined;
 
@@ -83,9 +83,12 @@ export class Engine {
             this.stop();
             removeListener();
             if (lastAnalysis !== undefined) {
-                const result = new Result(
-                    bestMove.getBestMove(), position, config, lastAnalysis
-                );
+                const result: IResult = {
+                    analysis: lastAnalysis,
+                    bestMove: bestMove.getBestMove(),
+                    config,
+                    position,
+                };
                 callback(result);
             }
         });
@@ -191,6 +194,15 @@ export class Engine {
      * @return {void}
      */
     public stop(): void {
+        this.process.execute("stop");
+    }
+
+    /**
+     * @public
+     * @method
+     * @return {void}
+     */
+    public quit(): void {
         this.process.execute("quit");
     }
 }
