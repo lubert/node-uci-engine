@@ -1,6 +1,6 @@
 {
   "name": "@lubert/node-uci-engine",
-  "version": "1.4.6",
+  "version": "1.5.0",
   "description": "Library for automating analysis with UCI-compatible chess engines",
   "homepage": "https://github.com/lubert/node-uci-engine#readme",
   "author": "Lu Zhu <lubert@outlook.com>",
