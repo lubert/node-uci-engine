@@ -43,7 +43,7 @@ export class Handler extends EventEmitter {
             return this.emitEvent(new OptionEvent(option));
         }
 
-        if (output.startsWith('info')) {
+        if (output.startsWith("info")) {
             const analysis: IAnalysis = {
                 depth: Parser.parseDepth(output),
                 time: Parser.parseTime(output),
