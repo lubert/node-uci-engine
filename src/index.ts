@@ -4,7 +4,7 @@ export { IPosition } from "./Analysis/IPosition";
 export { Result } from "./Analysis/Result";
 export { Engine } from "./Engine/Engine";
 export { EngineConfig } from "./Engine/EngineConfig";
-export { SearchConfig, ISearchConfig } from "./Engine/SearchConfig";
+export { ISearchConfig } from "./Engine/ISearchConfig";
 export { Process } from "./Engine/Process";
 export { Event } from "./Event/Event";
 export { Handler } from "./Event/Handler";

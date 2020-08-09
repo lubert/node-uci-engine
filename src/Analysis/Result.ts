@@ -1,6 +1,6 @@
 import { IAnalysis } from "./IAnalysis";
 import { IPosition } from "./IPosition";
-import { SearchConfig } from "src/Engine/SearchConfig";
+import { ISearchConfig } from "src/Engine/ISearchConfig";
 
 /**
  * @class Result
@@ -11,13 +11,13 @@ export class Result {
      * @constructor
      * @param {string} bestMove
      * @param {IPosition} position
-     * @param {SearchConfig} config
+     * @param {ISearchConfig} config
      * @param {Analysis} analysis
      */
     constructor(
         protected bestMove: string,
         protected position: IPosition,
-        protected config: SearchConfig,
+        protected config: ISearchConfig,
         protected analysis: IAnalysis
     ) {
         this.bestMove = bestMove;
@@ -47,9 +47,9 @@ export class Result {
     /**
      * @public
      * @method
-     * @return {SearchConfig}
+     * @return {ISearchConfig}
      */
-    public getConfig(): SearchConfig {
+    public getConfig(): ISearchConfig {
         return this.config;
     }
 

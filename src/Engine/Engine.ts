@@ -9,7 +9,7 @@ import { IEngineOption } from "./IEngineOption";
 import { OptionEvent } from "src/Event/OptionEvent";
 import { BestMoveEvent } from "src/Event/BestMoveEvent";
 import { EngineConfig } from "./EngineConfig";
-import { SearchConfig } from "./SearchConfig";
+import { ISearchConfig } from "./ISearchConfig";
 
 type EventCallback = (event: Event) => void;
 
@@ -61,13 +61,13 @@ export class Engine {
      * @public
      * @method
      * @param {IPosition} position
-     * @param {SearchConfig} config
+     * @param {ISearchConfig} config
      * @param {Function} callback
      * @return {void}
      */
     public analyzePosition(
         position: IPosition,
-        config: SearchConfig,
+        config: ISearchConfig,
         callback: (result: Result) => void
     ): void {
         let lastAnalysis: IAnalysis | undefined;
@@ -100,16 +100,20 @@ export class Engine {
      */
     public go(
         position: IPosition,
-        config: SearchConfig,
+        config: ISearchConfig,
         callback: (bestMove: BestMoveEvent) => void
     ): void {
         this.once("bestmove", (event: Event): void => {
             const bestMoveEvent = event as BestMoveEvent;
             callback(bestMoveEvent);
         });
-
+        let cmd = "go";
+        Object.entries(config).forEach(([key, value]) => {
+            cmd += ` ${key}`;
+            if (value !== null) cmd += ` ${value}`;
+        });
         this.process.execute(`position fen ${position.fen}`);
-        this.process.execute(config.getCommand());
+        this.process.execute(cmd);
     }
 
     /**
