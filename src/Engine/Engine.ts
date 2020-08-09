@@ -8,7 +8,7 @@ import { Result } from "../Analysis/Result";
 import { IEngineOption } from "./IEngineOption";
 import { OptionEvent } from "src/Event/OptionEvent";
 import { BestMoveEvent } from "src/Event/BestMoveEvent";
-import { EngineConfig } from "./EngineConfig";
+import { IEngineConfig } from "./IEngineConfig";
 import { ISearchConfig } from "./ISearchConfig";
 
 type EventCallback = (event: Event) => void;
@@ -166,7 +166,7 @@ export class Engine {
      * @param {Function} callback
      * @return {void}
      */
-    public start(callback: () => void, config?: EngineConfig): void {
+    public start(callback: () => void, config?: IEngineConfig): void {
         if (this.isStarted) {
             return callback();
         }
@@ -176,7 +176,11 @@ export class Engine {
         });
 
         this.getOptions(() => {
-            config?.getCommands().forEach(cmd => this.process.execute(cmd));
+            if (config) {
+                Object.entries(config).forEach(
+                    ([key, value]) => this.process.execute(`setoption name ${key} value ${value}`)
+                );
+            }
             this.process.execute("isready");
         });
     }

@@ -2,7 +2,6 @@ import "mocha";
 import proxyquire from "proxyquire";
 import sinon from "sinon";
 import { expect } from "chai";
-import { EngineConfig } from "../src/Engine/EngineConfig";
 
 describe("Engine", () => {
     describe("start", () => {
@@ -21,10 +20,10 @@ describe("Engine", () => {
             const engine = new Engine('fake');
             sinon.stub(engine, 'getOptions').callsFake((callback) => callback());
 
-            const config = new EngineConfig({
+            const config = {
                 'Ponder': 'true',
                 'MultiPV': '4',
-            });
+            };
             engine.start(null, config);
             expect(executeSpy.args).to.deep.eq([
                 ["setoption name Ponder value true"],
