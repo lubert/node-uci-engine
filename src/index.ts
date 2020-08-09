@@ -1,6 +1,6 @@
 export { IAnalysis } from "./Analysis/IAnalysis";
 export { IScore } from "./Analysis/IScore";
-export { Position } from "./Analysis/Position";
+export { IPosition } from "./Analysis/IPosition";
 export { Result } from "./Analysis/Result";
 export { Engine } from "./Engine/Engine";
 export { EngineConfig } from "./Engine/EngineConfig";

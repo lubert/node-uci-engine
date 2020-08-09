@@ -3,7 +3,7 @@ import { IAnalysis } from "../Analysis/IAnalysis";
 import { EvaluationEvent } from "../Event/EvaluationEvent";
 import { Handler } from "../Event/Handler";
 import { Process } from "./Process";
-import { Position } from "../Analysis/Position";
+import { IPosition } from "../Analysis/IPosition";
 import { Result } from "../Analysis/Result";
 import { IEngineOption } from "./IEngineOption";
 import { OptionEvent } from "src/Event/OptionEvent";
@@ -60,13 +60,13 @@ export class Engine {
     /**
      * @public
      * @method
-     * @param {Position} position
+     * @param {IPosition} position
      * @param {SearchConfig} config
      * @param {Function} callback
      * @return {void}
      */
     public analyzePosition(
-        position: Position,
+        position: IPosition,
         config: SearchConfig,
         callback: (result: Result) => void
     ): void {
@@ -99,7 +99,7 @@ export class Engine {
      * @return {void}
      */
     public go(
-        position: Position,
+        position: IPosition,
         config: SearchConfig,
         callback: (bestMove: BestMoveEvent) => void
     ): void {
@@ -108,7 +108,7 @@ export class Engine {
             callback(bestMoveEvent);
         });
 
-        this.process.execute(position.getCommand());
+        this.process.execute(`position fen ${position.fen}`);
         this.process.execute(config.getCommand());
     }
 

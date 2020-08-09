@@ -1,5 +1,5 @@
 import { IAnalysis } from "./IAnalysis";
-import { Position } from "./Position";
+import { IPosition } from "./IPosition";
 import { SearchConfig } from "src/Engine/SearchConfig";
 
 /**
@@ -10,13 +10,13 @@ export class Result {
     /**
      * @constructor
      * @param {string} bestMove
-     * @param {Position} position
+     * @param {IPosition} position
      * @param {SearchConfig} config
      * @param {Analysis} analysis
      */
     constructor(
         protected bestMove: string,
-        protected position: Position,
+        protected position: IPosition,
         protected config: SearchConfig,
         protected analysis: IAnalysis
     ) {
@@ -38,9 +38,9 @@ export class Result {
     /**
      * @public
      * @method
-     * @return {Position}
+     * @return {IPosition}
      */
-    public getPosition(): Position {
+    public getPosition(): IPosition {
         return this.position;
     }
 
