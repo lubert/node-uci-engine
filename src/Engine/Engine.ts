@@ -185,13 +185,13 @@ export class Engine {
      * @param {Function} callback
      * @return {void}
      */
-    public start(callback: () => void, config?: IEngineConfig): void {
+    public start(callback: (options: IEngineOption[], id: Record<string, string>) => void, config?: IEngineConfig): void {
         if (this.isStarted) {
-            return callback();
+            return callback(this.options, this.id);
         }
         this.once("ready", () => {
             this.isStarted = true;
-            callback();
+            callback(this.options, this.id);
         });
 
         this.getOptions(() => {
