@@ -10,6 +10,7 @@ export { Process } from "./Engine/Process";
 export { Event } from "./Event/Event";
 export { Handler } from "./Event/Handler";
 export { BestMoveEvent } from "./Event/BestMoveEvent";
+export { IdEvent } from "./Event/IdEvent";
 export { EvaluationEvent } from "./Event/EvaluationEvent";
 export { OutputEvent } from "./Event/OutputEvent";
 export { ReadyEvent } from "./Event/ReadyEvent";

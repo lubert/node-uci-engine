@@ -14,8 +14,12 @@ describe("Engine", (): void => {
         const engine = new Engine(enginePath);
 
         engine.getOptions(
-            (options: IEngineOption[]): void => {
+            (options: IEngineOption[], id): void => {
                 expect(options).to.deep.eq(engineOptions);
+                expect(id).to.deep.eq({
+                    name: 'Stockfish 11 64',
+                    author: "T. Romstad, M. Costalba, J. Kiiski, G. Linscott"
+                });
                 done();
             }
         );

@@ -10,6 +10,7 @@ import { OptionEvent } from "src/Event/OptionEvent";
 import { BestMoveEvent } from "src/Event/BestMoveEvent";
 import { IEngineConfig } from "./IEngineConfig";
 import { ISearchConfig } from "./ISearchConfig";
+import { IdEvent } from "src/Event/IdEvent";
 
 type EventCallback = (event: Event) => void;
 
@@ -32,6 +33,12 @@ export class Engine {
 
     /**
      * @protected
+     * @type {Handler}
+     */
+    protected id: Record<string, string>;
+
+    /**
+     * @protected
      * @type {IEngineOption[]}
      */
     protected options: IEngineOption[];
@@ -49,6 +56,7 @@ export class Engine {
     constructor(path: string) {
         this.process = new Process(path);
         this.handler = new Handler();
+        this.id = {};
         this.options = [];
         this.isStarted = false;
 
@@ -125,18 +133,26 @@ export class Engine {
      * @param {Function} callback
      * @return {void}
      */
-    public getOptions(callback: (options: IEngineOption[]) => void): void {
+    public getOptions(callback: (options: IEngineOption[], id: Record<string, string>) => void): void {
         this.options = [];
+        this.id = {};
         this.process.execute("uci");
 
-        const removeListener = this.on("option", (event: Event) => {
+        const removeIdListener = this.on("engineid", (event: Event) => {
+            const idEvent = event as IdEvent;
+            const id = idEvent.getId();
+            this.id[id.name] = id.value;
+        });
+
+        const removeOptionListener = this.on("option", (event: Event) => {
             const optEvent = event as OptionEvent;
             this.options.push(optEvent.getOption());
         });
 
         this.once("uciok", () => {
-            callback(this.options);
-            removeListener();
+            callback(this.options, this.id);
+            removeOptionListener();
+            removeIdListener();
         });
     }
 

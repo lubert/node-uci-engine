@@ -1,5 +1,6 @@
 import { IScore } from "../Analysis/IScore";
 import { IEngineOption } from "../Engine/IEngineOption";
+import { IEngineId } from "src/Engine/IEngineId";
 
 /**
  * @class Parser {
@@ -150,6 +151,26 @@ export class Parser {
 
         if (matches !== null) {
             return parseInt(matches[1]);
+        }
+
+        return null;
+    }
+
+    /**
+     * @public
+     * @static
+     * @method
+     * @param {string} output
+     * @return {IEngineId|null}
+     */
+    public static parseId(output: string): IEngineId | null {
+        const matches = output.match(/^id\s(\S+)\s(.+)/)
+
+        if (matches !== null) {
+            return {
+                name: matches[1],
+                value: matches[2]
+            };
         }
 
         return null;

@@ -9,6 +9,8 @@ import { Parser } from "../Uci/Parser";
 import { IEngineOption } from "src/Engine/IEngineOption";
 import { OptionEvent } from "./OptionEvent";
 import { UciOkEvent } from "./UciOkEvent";
+import { IdEvent } from "./IdEvent";
+import { IEngineId } from "src/Engine/IEngineId";
 
 /**
  * @class Handler
@@ -31,6 +33,11 @@ export class Handler extends EventEmitter {
 
         if (Parser.parseUciOk(output)) {
             return this.emitEvent(new UciOkEvent);
+        }
+
+        const engineid: IEngineId | null = Parser.parseId(output);
+        if (engineid !== null) {
+            return this.emitEvent(new IdEvent(engineid));
         }
 
         const bestMove = Parser.parseBestMove(output);
