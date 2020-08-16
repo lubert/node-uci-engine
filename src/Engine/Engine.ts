@@ -112,12 +112,14 @@ export class Engine {
     public go(
         position: IPosition,
         config: ISearchConfig,
-        callback: (bestMove: BestMoveEvent) => void
+        callback?: (bestMove: BestMoveEvent) => void
     ): void {
-        this.once("bestmove", (event: Event): void => {
-            const bestMoveEvent = event as BestMoveEvent;
-            callback(bestMoveEvent);
-        });
+        if (callback) {
+            this.once("bestmove", (event: Event): void => {
+                const bestMoveEvent = event as BestMoveEvent;
+                callback(bestMoveEvent);
+            });
+        }
         let cmd = "go";
         Object.entries(config).forEach(([key, value]) => {
             cmd += ` ${key}`;
