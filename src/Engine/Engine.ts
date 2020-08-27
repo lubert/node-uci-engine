@@ -184,6 +184,15 @@ export class Engine {
     /**
      * @public
      * @method
+     * @return {void}
+     */
+    public ponderhit(): void {
+        this.process.execute("ponderhit");
+    }
+
+    /**
+     * @public
+     * @method
      * @param {Function} callback
      * @return {void}
      */
