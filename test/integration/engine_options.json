@@ -3,6 +3,7 @@
     "name": "Debug Log File",
     "type": "string",
     "default": null,
+    "vars": null,
     "min": null,
     "max": null
   },
@@ -10,6 +11,7 @@
     "name": "Contempt",
     "type": "spin",
     "default": "24",
+    "vars": null,
     "min": "-100",
     "max": "100"
   },
@@ -17,6 +19,12 @@
     "name": "Analysis Contempt",
     "type": "combo",
     "default": "Both",
+    "vars": [
+      "Off",
+      "White",
+      "Black",
+      "Both"
+    ],
     "min": null,
     "max": null
   },
@@ -24,6 +32,7 @@
     "name": "Threads",
     "type": "spin",
     "default": "1",
+    "vars": null,
     "min": "1",
     "max": "512"
   },
@@ -31,6 +40,7 @@
     "name": "Hash",
     "type": "spin",
     "default": "16",
+    "vars": null,
     "min": "1",
     "max": "131072"
   },
@@ -38,6 +48,7 @@
     "name": "Clear Hash",
     "type": "button",
     "default": null,
+    "vars": null,
     "min": null,
     "max": null
   },
@@ -45,6 +56,7 @@
     "name": "Ponder",
     "type": "check",
     "default": "false",
+    "vars": null,
     "min": null,
     "max": null
   },
@@ -52,6 +64,7 @@
     "name": "MultiPV",
     "type": "spin",
     "default": "1",
+    "vars": null,
     "min": "1",
     "max": "500"
   },
@@ -59,6 +72,7 @@
     "name": "Skill Level",
     "type": "spin",
     "default": "20",
+    "vars": null,
     "min": "0",
     "max": "20"
   },
@@ -66,6 +80,7 @@
     "name": "Move Overhead",
     "type": "spin",
     "default": "30",
+    "vars": null,
     "min": "0",
     "max": "5000"
   },
@@ -73,6 +88,7 @@
     "name": "Minimum Thinking Time",
     "type": "spin",
     "default": "20",
+    "vars": null,
     "min": "0",
     "max": "5000"
   },
@@ -80,6 +96,7 @@
     "name": "Slow Mover",
     "type": "spin",
     "default": "84",
+    "vars": null,
     "min": "10",
     "max": "1000"
   },
@@ -87,6 +104,7 @@
     "name": "nodestime",
     "type": "spin",
     "default": "0",
+    "vars": null,
     "min": "0",
     "max": "10000"
   },
@@ -94,6 +112,7 @@
     "name": "UCI_Chess960",
     "type": "check",
     "default": "false",
+    "vars": null,
     "min": null,
     "max": null
   },
@@ -101,6 +120,7 @@
     "name": "UCI_AnalyseMode",
     "type": "check",
     "default": "false",
+    "vars": null,
     "min": null,
     "max": null
   },
@@ -108,6 +128,7 @@
     "name": "UCI_LimitStrength",
     "type": "check",
     "default": "false",
+    "vars": null,
     "min": null,
     "max": null
   },
@@ -115,6 +136,7 @@
     "name": "UCI_Elo",
     "type": "spin",
     "default": "1350",
+    "vars": null,
     "min": "1350",
     "max": "2850"
   },
@@ -122,6 +144,7 @@
     "name": "SyzygyPath",
     "type": "string",
     "default": "<empty>",
+    "vars": null,
     "min": null,
     "max": null
   },
@@ -129,6 +152,7 @@
     "name": "SyzygyProbeDepth",
     "type": "spin",
     "default": "1",
+    "vars": null,
     "min": "1",
     "max": "100"
   },
@@ -136,6 +160,7 @@
     "name": "Syzygy50MoveRule",
     "type": "check",
     "default": "true",
+    "vars": null,
     "min": null,
     "max": null
   },
@@ -143,6 +168,7 @@
     "name": "SyzygyProbeLimit",
     "type": "spin",
     "default": "7",
+    "vars": null,
     "min": "0",
     "max": "7"
   }

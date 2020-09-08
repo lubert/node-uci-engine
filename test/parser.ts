@@ -22,6 +22,7 @@ describe("Parser", (): void => {
                 name: "Debug Log File",
                 type: "string",
                 default: null,
+                vars: null,
                 max: null,
                 min: null,
             });
@@ -33,6 +34,7 @@ describe("Parser", (): void => {
                 name: "Ponder",
                 type: "check",
                 default: "false",
+                vars: null,
                 max: null,
                 min: null,
             });
@@ -44,8 +46,26 @@ describe("Parser", (): void => {
                 name: "Contempt",
                 type: "spin",
                 default: "0",
+                vars: null,
                 max: "100",
                 min: "-100",
+            });
+        });
+
+        it("has vars", (): void => {
+            const result = Parser.parseOption('option name Contempt type combo default Both var Off var White var Black var Both');
+            expect(result).to.deep.eq({
+                name: "Contempt",
+                type: "combo",
+                default: "Both",
+                vars: [
+                    "Off",
+                    "White",
+                    "Black",
+                    "Both",
+                ],
+                max: null,
+                min: null,
             });
         });
     });
