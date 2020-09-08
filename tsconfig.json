@@ -6,6 +6,7 @@
         "declaration": true,
         "removeComments": true,
         "strict": true,
+        "lib": ["es2020.string"],
         "moduleResolution": "node",
         "baseUrl": ".",
         "strictNullChecks": true,

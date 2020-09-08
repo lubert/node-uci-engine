@@ -270,12 +270,14 @@ export class Parser {
      */
     public static parseOption(output: string): IEngineOption | null {
         const matches = output.match(/option\sname\s(.+)\stype\s(\S+)(?:\sdefault\s(\S+)?)?(?:\smin\s(\S+))?(?:\smax\s(\S+))?/);
+        const vars = [...output.matchAll(/(?:\svar\s(\S+))/g)].map((match) => match[1]);
 
         if (matches !== null) {
             return {
                 name: matches[1],
                 type: matches[2],
                 default: matches[3] || null,
+                vars: vars.length ? vars : null,
                 min: matches[4] || null,
                 max: matches[5] || null,
             };
