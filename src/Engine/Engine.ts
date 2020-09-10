@@ -164,7 +164,7 @@ export class Engine {
      * @param {Function} callback
      * @return {Function} removeListener
      */
-    public on(name: string, callback: EventCallback): Function {
+    public on(name: string, callback: EventCallback): () => void {
         this.handler.on(name, callback);
         return () => this.handler.removeListener(name, callback);
     }
