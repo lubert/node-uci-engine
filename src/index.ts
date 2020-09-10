@@ -1,5 +1,4 @@
 export { IAnalysis } from "./Analysis/IAnalysis";
-export { IEngineConfig } from "./Engine/IEngineConfig";
 export { IPosition } from "./Analysis/IPosition";
 export { IResult } from "./Analysis/IResult";
 export { IScore } from "./Analysis/IScore";
