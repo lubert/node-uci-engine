@@ -25,6 +25,10 @@ export class Process {
         });
     }
 
+    public get isRunning(): boolean {
+        return this.child.exitCode == null;
+    }
+
     public get error(): Error | null {
         return this._error;
     }
