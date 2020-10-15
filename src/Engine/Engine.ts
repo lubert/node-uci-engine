@@ -54,6 +54,10 @@ export class Engine {
      */
     constructor(path: string) {
         this.process = new Process(path);
+        if (!this.process.isRunning) {
+            if (this.process.error) throw this.process.error;
+            throw new Error("Process failed to start");
+        }
         this.handler = new Handler();
         this.id = {};
         this.options = [];
