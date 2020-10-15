@@ -12,12 +12,21 @@ export class Process {
      */
     protected child: ChildProcess;
 
+    protected _error: Error | null = null;
+
     /**
      * @constructor
      * @param {string} path
      */
     constructor(path: string) {
         this.child = spawn(path);
+        this.child.on('error', (err) => {
+            this._error = err;
+        });
+    }
+
+    public get error(): Error | null {
+        return this._error;
     }
 
     /**
