@@ -10,6 +10,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint src --ext ts",
+    "prepare": "npm run build",
     "test": "nyc mocha --exit --colors --recursive --require ts-node/register --extension ts"
   },
   "devDependencies": {
