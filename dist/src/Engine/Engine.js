@@ -112,5 +112,9 @@ class Engine {
     quit() {
         this.process.execute("quit");
     }
+    destroy() {
+        this.process.kill();
+        this.handler.removeAllListeners();
+    }
 }
 exports.Engine = Engine;

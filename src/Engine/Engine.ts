@@ -250,4 +250,14 @@ export class Engine {
     public quit(): void {
         this.process.execute("quit");
     }
+
+    /**
+     * @public
+     * @method
+     * @return {void}
+     */
+    public destroy(): void {
+        this.process.kill();
+        this.handler.removeAllListeners();
+    }
 }

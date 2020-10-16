@@ -25,5 +25,6 @@ export declare class Engine {
     start(callback: (options: IEngineOption[], id: Record<string, string>) => void, config?: Record<string, string>): void;
     stop(): void;
     quit(): void;
+    destroy(): void;
 }
 export {};

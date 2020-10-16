@@ -7,7 +7,7 @@ class Process {
     constructor(path) {
         this._error = null;
         this.child = child_process_1.spawn(path);
-        this.child.on('error', (err) => {
+        this.child.on("error", (err) => {
             this._error = err;
         });
     }
@@ -34,6 +34,9 @@ class Process {
                 callback(output[i]);
             }
         });
+    }
+    kill() {
+        this.child.kill();
     }
 }
 exports.Process = Process;

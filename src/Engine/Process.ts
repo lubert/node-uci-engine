@@ -20,7 +20,7 @@ export class Process {
      */
     constructor(path: string) {
         this.child = spawn(path);
-        this.child.on('error', (err) => {
+        this.child.on("error", (err) => {
             this._error = err;
         });
     }
@@ -62,5 +62,14 @@ export class Process {
                 callback(output[i]);
             }
         });
+    }
+
+    /**
+     * @public
+     * @method
+     * @return {void}
+     */
+    public kill(): void {
+        this.child.kill();
     }
 }

@@ -8,4 +8,5 @@ export declare class Process {
     get error(): Error | null;
     execute(command: string, ...options: string[]): void;
     listen(callback: (output: string) => void): void;
+    kill(): void;
 }
