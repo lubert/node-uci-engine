@@ -4,6 +4,22 @@ import sinon from "sinon";
 import { expect } from "chai";
 
 describe("Engine", () => {
+    describe("constructor", () => {
+        it("raises an error if the process doesn't start", () => {
+            class FakeProcess {
+                listen = sinon.stub();
+                execute = sinon.stub();
+                isRunning = false;
+            }
+
+            const { Engine } = proxyquire('../src/Engine/Engine', {
+                './Process': { Process: FakeProcess },
+                '@noCallThru': true,
+            });
+
+            expect(() => { new Engine('fake') }).to.throw();
+        });
+    })
     describe("start", () => {
         it("execute is called", (): void => {
             const executeSpy = sinon.spy();
@@ -11,6 +27,7 @@ describe("Engine", () => {
             class FakeProcess {
                 listen = sinon.stub();
                 execute = executeSpy;
+                isRunning = true;
             }
 
             const { Engine } = proxyquire('../src/Engine/Engine', {

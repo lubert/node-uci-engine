@@ -12,12 +12,25 @@ export class Process {
      */
     protected child: ChildProcess;
 
+    protected _error: Error | null = null;
+
     /**
      * @constructor
      * @param {string} path
      */
     constructor(path: string) {
         this.child = spawn(path);
+        this.child.on("error", (err) => {
+            this._error = err;
+        });
+    }
+
+    public get isRunning(): boolean {
+        return !!(this.child.pid && this.child.exitCode == null);
+    }
+
+    public get error(): Error | null {
+        return this._error;
     }
 
     /**
@@ -49,5 +62,14 @@ export class Process {
                 callback(output[i]);
             }
         });
+    }
+
+    /**
+     * @public
+     * @method
+     * @return {void}
+     */
+    public kill(): void {
+        this.child.kill();
     }
 }

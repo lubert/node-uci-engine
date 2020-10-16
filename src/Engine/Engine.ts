@@ -54,6 +54,10 @@ export class Engine {
      */
     constructor(path: string) {
         this.process = new Process(path);
+        if (!this.process.isRunning) {
+            if (this.process.error) throw this.process.error;
+            throw new Error("Process failed to start");
+        }
         this.handler = new Handler();
         this.id = {};
         this.options = [];
@@ -62,6 +66,14 @@ export class Engine {
         this.process.listen((output: string) => {
             this.handler.handle(output);
         });
+    }
+
+    /**
+     * @public
+     * @return {boolean}
+     */
+    public get isRunning(): boolean {
+        return this.process.isRunning;
     }
 
     /**
@@ -237,5 +249,15 @@ export class Engine {
      */
     public quit(): void {
         this.process.execute("quit");
+    }
+
+    /**
+     * @public
+     * @method
+     * @return {void}
+     */
+    public destroy(): void {
+        this.process.kill();
+        this.handler.removeAllListeners();
     }
 }
