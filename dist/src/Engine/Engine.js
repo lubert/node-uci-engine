@@ -19,6 +19,9 @@ class Engine {
             this.handler.handle(output);
         });
     }
+    get isRunning() {
+        return this.process.isRunning;
+    }
     analyzePosition(position, config, callback) {
         let lastAnalysis;
         const removeListener = this.on("evaluation", (event) => {

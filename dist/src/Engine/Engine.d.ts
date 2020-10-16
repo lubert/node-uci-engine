@@ -14,6 +14,7 @@ export declare class Engine {
     protected options: IEngineOption[];
     protected isStarted: boolean;
     constructor(path: string);
+    get isRunning(): boolean;
     analyzePosition(position: IPosition, config: ISearchConfig, callback: (result: IResult) => void): void;
     go(position: IPosition, config: ISearchConfig, callback?: (bestMove: BestMoveEvent) => void): void;
     getOptions(callback: (options: IEngineOption[], id: Record<string, string>) => void): void;
