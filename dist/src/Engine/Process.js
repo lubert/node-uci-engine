@@ -12,7 +12,7 @@ class Process {
         });
     }
     get isRunning() {
-        return this.child.exitCode == null;
+        return !!(this.child.pid && this.child.exitCode == null);
     }
     get error() {
         return this._error;
