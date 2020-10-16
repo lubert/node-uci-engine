@@ -26,7 +26,7 @@ export class Process {
     }
 
     public get isRunning(): boolean {
-        return this.child.exitCode == null;
+        return !!(this.child.pid && this.child.exitCode == null);
     }
 
     public get error(): Error | null {
