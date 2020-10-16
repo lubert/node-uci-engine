@@ -70,6 +70,14 @@ export class Engine {
 
     /**
      * @public
+     * @return {boolean}
+     */
+    public get isRunning(): boolean {
+        return this.process.isRunning;
+    }
+
+    /**
+     * @public
      * @method
      * @param {IPosition} position
      * @param {ISearchConfig} config
