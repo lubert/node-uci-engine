@@ -14,11 +14,11 @@ npm install @lubert/node-uci-engine
 ## Usage
 
 ```javascript
-const { Engine, Position, SearchConfig } = require('@lubert/node-uci-engine');
+const { Engine } = require('@lubert/node-uci-engine');
 
 const engine = new Engine('/path/to/your/engine');
-const position = new Position("r1bqkb1r/5ppp/p2ppn2/1pn5/3NP3/1BN5/PPP2PPP/R1BQR1K1 w kq - 4 10");
-const config = new SearchConfig({ depth: 15 });
+const position =  { fen:"r1bqkb1r/5ppp/p2ppn2/1pn5/3NP3/1BN5/PPP2PPP/R1BQR1K1 w kq - 4 10") };
+const config =  { depth: 15 };
 engine.analyzePosition(
     position,
     config,
