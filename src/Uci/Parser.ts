@@ -75,7 +75,7 @@ export class Parser {
          *
          * info depth 2 seldepth 2 multipv 3 score cp 121 nodes 402 nps 402000 tbhits 0 time 1 pv a2a3 c5b3
          */
-        const regex = /info.*\sdepth\s([0-9]+).*multipv\s([0-9]+).*score\s(.*)\s([0-9]+).*nodes.*time\s([0-9]+).*pv\s([a-h1-8\s]+)$/
+        const regex = /info.*\sdepth\s([0-9]+).*multipv\s([0-9]+).*score\s(.*)\s(-?[0-9]+).*nodes.*time\s([0-9]+).*pv\s([a-h1-8\s]+)$/
         const matches = output.trim().match(regex)
 
         if (matches !== null) {
