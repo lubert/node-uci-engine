@@ -37,7 +37,7 @@ export class Parser {
      * @return {string[]|null}
      */
     public static parseMoves(output: string): string[] | null {
-        const matches = output.match(/info.*pv\s([a-h1-8\s]+)$/)
+        const matches = output.match(/info.*pv\s([a-hqnr1-8\s]+)$/)
 
         if (matches !== null) {
             let moves: string[] = [];
