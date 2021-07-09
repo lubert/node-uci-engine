@@ -1,4 +1,5 @@
 import { IScore } from "./IScore";
+import { IVariation } from "./IVariation";
 
 /**
  * @interface IAnalysis
@@ -16,4 +17,5 @@ export interface IAnalysis {
     nps: number | null;
     moves: string[] | null;
     score: IScore | null;
+    variations: IVariation[] | null;
 }

@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import { ReadyEvent } from "./ReadyEvent";
 import { IAnalysis } from "../Analysis/IAnalysis";
+import { IVariation } from "../Analysis/IVariation";
 import { EvaluationEvent } from "./EvaluationEvent";
 import { Event } from "./Event";
 import { BestMoveEvent } from "./BestMoveEvent";
@@ -18,6 +19,12 @@ import { IEngineId } from "src/Engine/IEngineId";
  * @module Handler
  */
 export class Handler extends EventEmitter {
+    /**
+     * @protected
+     * @type {Record<number, IVariation>}
+     */
+    protected variations: Record<number, IVariation> = {};
+
     /**
      * @public
      * @method
@@ -51,6 +58,8 @@ export class Handler extends EventEmitter {
         }
 
         if (output.startsWith("info")) {
+            this.variations = Parser.parsePrincipalVariations(output, this.variations)
+
             const analysis: IAnalysis = {
                 depth: Parser.parseDepth(output),
                 time: Parser.parseTime(output),
@@ -63,9 +72,26 @@ export class Handler extends EventEmitter {
                 currmovenumber: Parser.parseCurrmoveNumber(output),
                 moves: Parser.parseMoves(output),
                 score: Parser.parseScore(output),
+                variations: Object.values(this.variations)
             };
             return this.emitEvent(new EvaluationEvent(analysis));
         }
+    }
+
+    /**
+     * This handler processes output *line-by-line*. We need to compare multiple
+     * lines to be able to keep MultiPv and max depth in the last analysis.
+     *
+     * To be able to do that, we need to keep state in the handler so we can
+     * reuse this during analysis. At the end of analysis, this command is
+     * called so we reset the cache.
+     *
+     * @public
+     * @method
+     * @return {void}
+     */
+    public reset(): void {
+      this.variations = {}
     }
 
     /**

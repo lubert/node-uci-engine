@@ -110,6 +110,11 @@ export class Engine {
                 };
                 callback(result);
             }
+
+            /**
+             * Clean the multiPv cache
+             */
+            this.handler.reset();
         });
     }
 
