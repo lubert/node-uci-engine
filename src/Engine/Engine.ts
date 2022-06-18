@@ -13,6 +13,14 @@ import { IdEvent } from "src/Event/IdEvent";
 
 type EventCallback = (event: Event) => void;
 
+interface Logger {
+    debug(message?: any, ...optionalParams: any[]): void;
+    info(message?: any, ...optionalParams: any[]): void;
+    warn(message?: any, ...optionalParams: any[]): void;
+    error(message?: any, ...optionalParams: any[]): void;
+    [x: string]: any;
+}
+
 /**
  * @class Engine
  * @module Engine
@@ -49,10 +57,16 @@ export class Engine {
     protected isStarted: boolean;
 
     /**
+     * @protected
+     * @type {Logger}
+     */
+    protected logger: Logger;
+
+    /**
      * @constructor
      * @param {string} path
      */
-    constructor(path: string) {
+    constructor(path: string, logger: Logger = console) {
         this.process = new Process(path);
         if (!this.process.isRunning) {
             if (this.process.error) throw this.process.error;
@@ -62,8 +76,10 @@ export class Engine {
         this.id = {};
         this.options = [];
         this.isStarted = false;
+        this.logger = logger;
 
         this.process.listen((output: string) => {
+            this.logger.debug(`[Engine] Output "${output}"`)
             this.handler.handle(output);
         });
     }
@@ -136,8 +152,8 @@ export class Engine {
             cmd += ` ${key}`;
             if (value !== null) cmd += ` ${value}`;
         });
-        this.process.execute(`position fen ${position.fen}`);
-        this.process.execute(cmd);
+        this.execute(`position fen ${position.fen}`);
+        this.execute(cmd);
     }
 
     /**
@@ -149,7 +165,7 @@ export class Engine {
     public getOptions(callback: (options: IEngineOption[], id: Record<string, string>) => void): void {
         this.options = [];
         this.id = {};
-        this.process.execute("uci");
+        this.execute("uci");
 
         const removeIdListener = this.on("engineid", (event: Event) => {
             const idEvent = event as IdEvent;
@@ -198,7 +214,7 @@ export class Engine {
      * @return {void}
      */
     public ponderhit(): void {
-        this.process.execute("ponderhit");
+        this.execute("ponderhit");
     }
 
     /**
@@ -206,9 +222,9 @@ export class Engine {
      * @method
      * @return {void}
      */
-    public setOptions(config: Record<string, string>) {
+    public setOptions(config: Record<string, string>): void {
         Object.entries(config).forEach(
-            ([key, value]) => this.process.execute(`setoption name ${key} value ${value}`)
+            ([key, value]) => this.execute(`setoption name ${key} value ${value}`)
         );
     }
 
@@ -229,7 +245,7 @@ export class Engine {
 
         this.getOptions(() => {
             if (config) this.setOptions(config);
-            this.process.execute("isready");
+            this.execute("isready");
         });
     }
 
@@ -239,7 +255,7 @@ export class Engine {
      * @return {void}
      */
     public stop(): void {
-        this.process.execute("stop");
+        this.execute("stop");
     }
 
     /**
@@ -248,7 +264,7 @@ export class Engine {
      * @return {void}
      */
     public quit(): void {
-        this.process.execute("quit");
+        this.execute("quit");
     }
 
     /**
@@ -259,5 +275,10 @@ export class Engine {
     public destroy(): void {
         this.process.kill();
         this.handler.removeAllListeners();
+    }
+
+    public execute(cmd: string) {
+        this.logger.debug(`[Engine] Command "${cmd}"`)
+        this.process.execute(cmd);
     }
 }
