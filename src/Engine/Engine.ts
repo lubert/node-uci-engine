@@ -213,6 +213,15 @@ export class Engine {
      * @method
      * @return {void}
      */
+    public removeAllListeners(): void {
+        this.handler.removeAllListeners();
+    }
+
+    /**
+     * @public
+     * @method
+     * @return {void}
+     */
     public ponderhit(): void {
         this.execute("ponderhit");
     }
