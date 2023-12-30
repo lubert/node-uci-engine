@@ -10,7 +10,7 @@ export class Process {
      * @protected
      * @type {ChildProcess}
      */
-    protected child: ChildProcess;
+    protected _child: ChildProcess;
 
     protected _error: Error | null = null;
 
@@ -19,14 +19,18 @@ export class Process {
      * @param {string} path
      */
     constructor(path: string) {
-        this.child = spawn(path);
-        this.child.on("error", (err) => {
+        this._child = spawn(path);
+        this._child.on("error", (err) => {
             this._error = err;
         });
     }
 
+    public get child(): ChildProcess {
+        return this._child;
+    }
+
     public get isRunning(): boolean {
-        return !!(this.child.pid && this.child.exitCode == null);
+        return !!(this._child.pid && this._child.exitCode == null);
     }
 
     public get error(): Error | null {
@@ -42,9 +46,9 @@ export class Process {
      */
     public execute(command: string, ...options: string[]): void {
         if (options.length > 0) {
-            this.child.stdin?.write(`${command} ${options.join(" ")}${EOL}`);
+            this._child.stdin?.write(`${command} ${options.join(" ")}${EOL}`);
         } else {
-            this.child.stdin?.write(`${command}${EOL}`);
+            this._child.stdin?.write(`${command}${EOL}`);
         }
     }
 
@@ -55,7 +59,7 @@ export class Process {
      * @return {void}
      */
     public listen(callback: (output: string) => void): void {
-        this.child.stdout?.on("data", function(this: Process, data: string[]): void {
+        this._child.stdout?.on("data", function(this: Process, data: string[]): void {
             const output: string[] = data.toString().split(EOL).filter(x => x);
 
             for (let i = 0, length = output.length; i < length; i++) {
@@ -70,6 +74,6 @@ export class Process {
      * @return {void}
      */
     public kill(): void {
-        this.child.kill();
+        this._child.kill();
     }
 }
