@@ -30,7 +30,7 @@ export class Engine {
      * @protected
      * @type {Process}
      */
-    protected process: Process;
+    protected _process: Process;
 
     /**
      * @protected
@@ -67,9 +67,9 @@ export class Engine {
      * @param {string} path
      */
     constructor(path: string, logger: Logger = console) {
-        this.process = new Process(path);
-        if (!this.process.isRunning) {
-            if (this.process.error) throw this.process.error;
+        this._process = new Process(path);
+        if (!this._process.isRunning) {
+            if (this._process.error) throw this._process.error;
             throw new Error("Process failed to start");
         }
         this.handler = new Handler();
@@ -78,7 +78,7 @@ export class Engine {
         this.isStarted = false;
         this.logger = logger;
 
-        this.process.listen((output: string) => {
+        this._process.listen((output: string) => {
             this.logger.debug(`[Engine] Output "${output}"`)
             this.handler.handle(output);
         });
@@ -89,7 +89,15 @@ export class Engine {
      * @return {boolean}
      */
     public get isRunning(): boolean {
-        return this.process.isRunning;
+        return this._process.isRunning;
+    }
+
+    /**
+     * @public
+     * @return {Process}
+     */
+    public get process(): Process {
+        return this._process;
     }
 
     /**
@@ -282,12 +290,12 @@ export class Engine {
      * @return {void}
      */
     public destroy(): void {
-        this.process.kill();
+        this._process.kill();
         this.handler.removeAllListeners();
     }
 
     public execute(cmd: string) {
         this.logger.debug(`[Engine] Command "${cmd}"`)
-        this.process.execute(cmd);
+        this._process.execute(cmd);
     }
 }
