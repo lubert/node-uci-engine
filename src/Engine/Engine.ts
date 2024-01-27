@@ -79,7 +79,7 @@ export class Engine {
         this.logger = logger;
 
         this._process.listen((output: string) => {
-            this.logger.debug(`[Engine] Output "${output}"`)
+            this.logger.debug(`Output "${output}"`)
             this.handler.handle(output);
         });
     }
@@ -295,7 +295,7 @@ export class Engine {
     }
 
     public execute(cmd: string) {
-        this.logger.debug(`[Engine] Command "${cmd}"`)
+        this.logger.debug(`Command "${cmd}"`)
         this._process.execute(cmd);
     }
 }
