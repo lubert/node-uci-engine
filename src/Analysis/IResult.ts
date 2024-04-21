@@ -7,7 +7,7 @@ import { ISearchConfig } from "src/Engine/ISearchConfig";
  * @module IResult
  */
 export interface IResult {
-  bestMove: string;
+  bestMove: string | null;
   position: IPosition;
   config: ISearchConfig;
   analysis: IAnalysis;

@@ -12,7 +12,7 @@ export class BestMoveEvent extends Event {
    * @param {string | null} ponder
    */
   constructor(
-    protected bestMove: string,
+    protected bestMove: string | null,
     protected ponder: string | null,
   ) {
     super("bestmove");
@@ -26,7 +26,7 @@ export class BestMoveEvent extends Event {
    * @method
    * @return {string}
    */
-  public getBestMove(): string {
+  public getBestMove(): string | null {
     return this.bestMove;
   }
 
