@@ -7,22 +7,22 @@ import { IEngineOption } from "src/Engine/IEngineOption";
  * @module OptionEvent
  */
 export class OptionEvent extends Event {
-    /**
-     * @constructor
-     * @param {IEngineOption} option
-     */
-    constructor(protected option: IEngineOption) {
-        super("option");
+  /**
+   * @constructor
+   * @param {IEngineOption} option
+   */
+  constructor(protected option: IEngineOption) {
+    super("option");
 
-        this.option = option;
-    }
+    this.option = option;
+  }
 
-    /**
-     * @public
-     * @method
-     * @return {IEngineOption}
-     */
-    public getOption(): IEngineOption {
-        return this.option;
-    }
+  /**
+   * @public
+   * @method
+   * @return {IEngineOption}
+   */
+  public getOption(): IEngineOption {
+    return this.option;
+  }
 }

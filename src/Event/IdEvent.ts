@@ -7,22 +7,22 @@ import { IEngineId } from "src/Engine/IEngineId";
  * @module IdEvent
  */
 export class IdEvent extends Event {
-    /**
-     * @constructor
-     * @param {string} option
-     */
-    constructor(protected id: IEngineId) {
-        super("engineid");
+  /**
+   * @constructor
+   * @param {string} option
+   */
+  constructor(protected id: IEngineId) {
+    super("engineid");
 
-        this.id = id;
-    }
+    this.id = id;
+  }
 
-    /**
-     * @public
-     * @method
-     * @return {string}
-     */
-    public getId(): IEngineId {
-        return this.id;
-    }
+  /**
+   * @public
+   * @method
+   * @return {string}
+   */
+  public getId(): IEngineId {
+    return this.id;
+  }
 }

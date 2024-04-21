@@ -3,6 +3,6 @@
  * @module IScore
  */
 export interface IScore {
-    type: string;
-    value: number;
+  type: string;
+  value: number;
 }

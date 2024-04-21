@@ -3,9 +3,9 @@
  * @module IOption
  */
 export interface IOption {
-    /**
-     * @method
-     * @return {string}
-     */
-    getInput(): string;
+  /**
+   * @method
+   * @return {string}
+   */
+  getInput(): string;
 }

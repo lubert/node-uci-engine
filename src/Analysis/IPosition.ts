@@ -3,5 +3,5 @@
  * @module IPosition
  */
 export interface IPosition {
-    fen: string;
+  fen: string;
 }

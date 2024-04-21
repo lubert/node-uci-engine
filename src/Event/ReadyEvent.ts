@@ -6,10 +6,10 @@ import { Event } from "./Event";
  * @module ReadyEvent
  */
 export class ReadyEvent extends Event {
-    /**
-     * @constructor
-     */
-    constructor() {
-        super("ready");
-    }
+  /**
+   * @constructor
+   */
+  constructor() {
+    super("ready");
+  }
 }

@@ -6,10 +6,10 @@ import { Event } from "./Event";
  * @module UciOkEvent
  */
 export class UciOkEvent extends Event {
-    /**
-     * @constructor
-     */
-    constructor() {
-        super("uciok");
-    }
+  /**
+   * @constructor
+   */
+  constructor() {
+    super("uciok");
+  }
 }
