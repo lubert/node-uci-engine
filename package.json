@@ -9,7 +9,7 @@
   "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint src --ext ts",
+    "lint": "prettier src -w",
     "test": "nyc mocha --exit --colors --recursive --require ts-node/register --extension ts"
   },
   "devDependencies": {
