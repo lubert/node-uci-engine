@@ -6,10 +6,10 @@ import { Process } from "./Process";
 import { IPosition } from "../Analysis/IPosition";
 import { IResult } from "../Analysis/IResult";
 import { IEngineOption } from "./IEngineOption";
-import { OptionEvent } from "src/Event/OptionEvent";
-import { BestMoveEvent } from "src/Event/BestMoveEvent";
+import { OptionEvent } from "../Event/OptionEvent";
+import { BestMoveEvent } from "../Event/BestMoveEvent";
 import { ISearchConfig } from "./ISearchConfig";
-import { IdEvent } from "src/Event/IdEvent";
+import { IdEvent } from "../Event/IdEvent";
 
 type EventCallback = (event: Event) => void;
 

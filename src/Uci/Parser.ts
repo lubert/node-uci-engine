@@ -1,6 +1,6 @@
 import { IScore } from "../Analysis/IScore";
 import { IEngineOption } from "../Engine/IEngineOption";
-import { IEngineId } from "src/Engine/IEngineId";
+import { IEngineId } from "../Engine/IEngineId";
 
 /**
  * @class Parser {

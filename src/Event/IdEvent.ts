@@ -1,5 +1,5 @@
 import { Event } from "./Event";
-import { IEngineId } from "src/Engine/IEngineId";
+import { IEngineId } from "../Engine/IEngineId";
 
 /**
  * @class IdEvent

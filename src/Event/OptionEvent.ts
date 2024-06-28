@@ -1,5 +1,5 @@
 import { Event } from "./Event";
-import { IEngineOption } from "src/Engine/IEngineOption";
+import { IEngineOption } from "../Engine/IEngineOption";
 
 /**
  * @class OptionEvent

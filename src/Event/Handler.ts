@@ -6,11 +6,11 @@ import { Event } from "./Event";
 import { BestMoveEvent } from "./BestMoveEvent";
 import { OutputEvent } from "./OutputEvent";
 import { Parser } from "../Uci/Parser";
-import { IEngineOption } from "src/Engine/IEngineOption";
+import { IEngineOption } from "../Engine/IEngineOption";
 import { OptionEvent } from "./OptionEvent";
 import { UciOkEvent } from "./UciOkEvent";
 import { IdEvent } from "./IdEvent";
-import { IEngineId } from "src/Engine/IEngineId";
+import { IEngineId } from "../Engine/IEngineId";
 
 /**
  * @class Handler
