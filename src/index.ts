@@ -2,6 +2,7 @@ export { IAnalysis } from "./Analysis/IAnalysis";
 export { IPosition } from "./Analysis/IPosition";
 export { IResult } from "./Analysis/IResult";
 export { IScore } from "./Analysis/IScore";
+export { IWdl } from "./Analysis/IWdl";
 export { ISearchConfig } from "./Engine/ISearchConfig";
 export { Engine } from "./Engine/Engine";
 export { Parser } from "./Uci/Parser";

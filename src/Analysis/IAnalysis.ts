@@ -1,4 +1,5 @@
 import { IScore } from "./IScore";
+import { IWdl } from "./IWdl";
 
 /**
  * @interface IAnalysis
@@ -16,4 +17,6 @@ export interface IAnalysis {
   nps: number | null;
   moves: string[] | null;
   score: IScore | null;
+  wdl: IWdl | null;
+  movesleft: number | null;
 }

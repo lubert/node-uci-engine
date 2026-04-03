@@ -63,6 +63,8 @@ export class Handler extends EventEmitter {
         currmovenumber: Parser.parseCurrmoveNumber(output),
         moves: Parser.parseMoves(output),
         score: Parser.parseScore(output),
+        wdl: Parser.parseWdl(output),
+        movesleft: Parser.parseMovesleft(output),
       };
       return this.emitEvent(new EvaluationEvent(analysis));
     }

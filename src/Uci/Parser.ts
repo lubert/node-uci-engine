@@ -1,4 +1,5 @@
 import { IScore } from "../Analysis/IScore";
+import { IWdl } from "../Analysis/IWdl";
 import { IEngineOption } from "../Engine/IEngineOption";
 import { IEngineId } from "../Engine/IEngineId";
 
@@ -257,6 +258,44 @@ export class Parser {
    */
   public static parseTime(output: string): number | null {
     const matches = output.match(/time\s(\d+)/);
+
+    if (matches !== null) {
+      return parseInt(matches[1]);
+    }
+
+    return null;
+  }
+
+  /**
+   * @public
+   * @static
+   * @method
+   * @param {string} output
+   * @return {IWdl|null}
+   */
+  public static parseWdl(output: string): IWdl | null {
+    const matches = output.match(/wdl\s(\d+)\s(\d+)\s(\d+)/);
+
+    if (matches !== null) {
+      return {
+        win: parseInt(matches[1]),
+        draw: parseInt(matches[2]),
+        loss: parseInt(matches[3]),
+      };
+    }
+
+    return null;
+  }
+
+  /**
+   * @public
+   * @static
+   * @method
+   * @param {string} output
+   * @return {number|null}
+   */
+  public static parseMovesleft(output: string): number | null {
+    const matches = output.match(/movesleft\s(\d+)/);
 
     if (matches !== null) {
       return parseInt(matches[1]);

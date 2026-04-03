@@ -26,6 +26,30 @@ describe("Parser", (): void => {
         });
     });
 
+    describe("parseWdl", (): void => {
+        it("parses wdl from info string", (): void => {
+            const result = Parser.parseWdl('info depth 12 seldepth 15 multipv 1 score cp 25 wdl 450 400 150 nodes 8000 nps 400000 time 20 pv e2e4 e7e5');
+            expect(result).to.deep.eq({ win: 450, draw: 400, loss: 150 });
+        });
+
+        it("returns null when no wdl present", (): void => {
+            const result = Parser.parseWdl('info depth 20 seldepth 33 multipv 1 score cp 257 nodes 1701160 nps 4129029 time 412 pv f1f2');
+            expect(result).to.eq(null);
+        });
+    });
+
+    describe("parseMovesleft", (): void => {
+        it("parses movesleft from info string", (): void => {
+            const result = Parser.parseMovesleft('info depth 12 score cp 25 wdl 450 400 150 movesleft 42 nodes 8000 nps 400000 time 20 pv e2e4');
+            expect(result).to.eq(42);
+        });
+
+        it("returns null when no movesleft present", (): void => {
+            const result = Parser.parseMovesleft('info depth 20 seldepth 33 multipv 1 score cp 257 nodes 1701160 nps 4129029 time 412 pv f1f2');
+            expect(result).to.eq(null);
+        });
+    });
+
     describe("parseOption", (): void => {
         it("no default", (): void => {
             const result = Parser.parseOption('option name Debug Log File type string default');
