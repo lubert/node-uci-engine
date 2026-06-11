@@ -35,7 +35,7 @@ describe("Engine", () => {
                 '@noCallThru': true,
             });
             const engine = new Engine('fake');
-            sinon.stub(engine, 'getOptions').callsFake((callback) => callback());
+            sinon.stub(engine, 'getOptions').callsFake((...args: unknown[]) => (args[0] as () => void)());
 
             const config = {
                 'Ponder': 'true',
