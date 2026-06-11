@@ -134,5 +134,17 @@ describe("Parser", (): void => {
                 min: null,
             });
         });
+
+        it("treats <empty> default as an empty string", (): void => {
+            const result = Parser.parseOption('option name SyzygyPath type string default <empty>');
+            expect(result).to.deep.eq({
+                name: "SyzygyPath",
+                type: "string",
+                default: "",
+                vars: null,
+                max: null,
+                min: null,
+            });
+        });
     });
 });

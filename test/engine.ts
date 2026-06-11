@@ -50,4 +50,28 @@ describe("Engine", () => {
         });
     });
 
+    describe("setOptions", () => {
+        it("sends the <empty> sentinel for an empty string value", (): void => {
+            const executeSpy = sinon.spy();
+
+            class FakeProcess {
+                listen = sinon.stub();
+                execute = executeSpy;
+                isRunning = true;
+            }
+
+            const { Engine } = proxyquire('../src/Engine/Engine', {
+                './Process': { Process: FakeProcess },
+                '@noCallThru': true,
+            });
+            const engine = new Engine('fake');
+
+            engine.setOptions({ 'SyzygyPath': '', 'Threads': '4' });
+            expect(executeSpy.args).to.deep.eq([
+                ["setoption name SyzygyPath value <empty>"],
+                ["setoption name Threads value 4"],
+            ]);
+        });
+    });
+
 });

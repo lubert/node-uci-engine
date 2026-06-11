@@ -243,7 +243,10 @@ export class Engine {
    */
   public setOptions(config: Record<string, string>): void {
     Object.entries(config).forEach(([key, value]) =>
-      this.execute(`setoption name ${key} value ${value}`),
+      // UCI expects the `<empty>` sentinel for an empty string value
+      this.execute(
+        `setoption name ${key} value ${value === '' ? '<empty>' : value}`,
+      ),
     );
   }
 

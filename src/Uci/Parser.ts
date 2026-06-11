@@ -358,7 +358,8 @@ export class Parser {
       return {
         name: matches[1],
         type: matches[2],
-        default: matches[3] || null,
+        // UCI sends `<empty>` as the empty-string sentinel; `null` means no default given
+        default: matches[3] === '<empty>' ? '' : matches[3] || null,
         vars: vars.length ? vars : null,
         min: matches[4] || null,
         max: matches[5] || null,
