@@ -50,6 +50,37 @@ describe("Parser", (): void => {
         });
     });
 
+    describe("parseVerboseMoveStats", (): void => {
+        it("parses verbose move stats line", (): void => {
+            const result = Parser.parseVerboseMoveStats('info string e2e4  (322 ) N:      67 (+ 1) (P: 25.22%) (WL:  0.11098) (D: 0.439) (M: 161.8) (Q:  0.11098) (U: 0.08953) (S:  0.19951) (V:  0.1110) ');
+            expect(result).to.deep.eq({
+                move: 'e2e4',
+                visits: 67,
+                policy: 25.22,
+                winLoss: 0.11098,
+                draw: 0.439,
+                movesLeft: 161.8,
+                q: 0.11098,
+            });
+        });
+
+        it("parses move with promotion", (): void => {
+            const result = Parser.parseVerboseMoveStats('info string a7a8q  (123 ) N:      10 (+ 0) (P:  5.00%) (WL:  0.50000) (D: 0.300) (M: 10.0) (Q:  0.50000) (U: 0.10000) (S:  0.20000) (V:  0.5000) ');
+            expect(result).to.not.eq(null);
+            expect(result!.move).to.eq('a7a8q');
+        });
+
+        it("returns null for non-move info string", (): void => {
+            const result = Parser.parseVerboseMoveStats('info string node  (  20) N:     194 (+ 1) (P: 89.11%) (WL:  0.09404) (D: 0.452) (M: 165.7) (Q:  0.09404) (V:  0.0889) ');
+            expect(result).to.eq(null);
+        });
+
+        it("returns null for regular info line", (): void => {
+            const result = Parser.parseVerboseMoveStats('info depth 20 seldepth 33 multipv 1 score cp 257 nodes 1701160 nps 4129029 time 412 pv f1f2');
+            expect(result).to.eq(null);
+        });
+    });
+
     describe("parseOption", (): void => {
         it("no default", (): void => {
             const result = Parser.parseOption('option name Debug Log File type string default');

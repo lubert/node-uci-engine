@@ -1,3 +1,4 @@
+import { IMoveStats } from "../Analysis/IMoveStats";
 import { IScore } from "../Analysis/IScore";
 import { IWdl } from "../Analysis/IWdl";
 import { IEngineOption } from "../Engine/IEngineOption";
@@ -302,6 +303,40 @@ export class Parser {
     }
 
     return null;
+  }
+
+  /**
+   * @public
+   * @static
+   * @method
+   * @param {string} output
+   * @return {IMoveStats|null}
+   */
+  public static parseVerboseMoveStats(output: string): IMoveStats | null {
+    const moveMatch = output.match(
+      /^info string ([a-h][1-8][a-h][1-8][qrbn]?)\s/,
+    );
+
+    if (moveMatch === null) {
+      return null;
+    }
+
+    const p = output.match(/\(P:\s*([\d.]+)%\)/);
+    const n = output.match(/N:\s*(\d+)/);
+    const wl = output.match(/\(WL:\s*([-\d.]+)\)/);
+    const d = output.match(/\(D:\s*([\d.]+)\)/);
+    const m = output.match(/\(M:\s*([\d.]+)\)/);
+    const q = output.match(/\(Q:\s*([-\d.]+)\)/);
+
+    return {
+      move: moveMatch[1],
+      visits: n ? parseInt(n[1]) : 0,
+      policy: p ? parseFloat(p[1]) : 0,
+      winLoss: wl ? parseFloat(wl[1]) : 0,
+      draw: d ? parseFloat(d[1]) : 0,
+      movesLeft: m ? parseFloat(m[1]) : 0,
+      q: q ? parseFloat(q[1]) : 0,
+    };
   }
 
   /**

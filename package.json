@@ -11,7 +11,7 @@
     "build": "tsc",
     "lint": "prettier src -w",
     "prepare": "npm run build",
-    "test": "nyc mocha --exit --colors --recursive --require ts-node/register --extension ts"
+    "test": "nyc mocha --exit --colors --recursive --node-option no-experimental-strip-types --require ts-node/register --extension ts"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",

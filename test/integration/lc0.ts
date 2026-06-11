@@ -3,8 +3,11 @@ import { expect } from "chai";
 import { execSync } from "child_process";
 import { Engine } from "../../src/Engine/Engine";
 import { IResult } from "../../src/Analysis/IResult";
+import { IMoveStats } from "../../src/Analysis/IMoveStats";
 import { Event } from "../../src/Event/Event";
 import { EvaluationEvent } from "../../src/Event/EvaluationEvent";
+import { OutputEvent } from "../../src/Event/OutputEvent";
+import { Parser } from "../../src/Uci/Parser";
 function findLc0(): string | null {
     try {
         return execSync("which lc0", { encoding: "utf-8" }).trim();
@@ -83,6 +86,41 @@ describe("Lc0", (): void => {
                 expect(sawMovesleft).to.eq(true);
                 engine.quit();
                 done();
+            });
+        });
+    });
+
+    it("should parse verbose move stats from output", function (done: Function) {
+        this.timeout(30000);
+        const engine = new Engine(lc0Path!, silentLogger);
+        const position = {
+            fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        };
+
+        engine.start(() => {
+            engine.setOptions({ VerboseMoveStats: "true" });
+
+            const stats: IMoveStats[] = [];
+            const removeListener = engine.on("output", (event: Event) => {
+                const line = (event as OutputEvent).getOutput();
+                const parsed = Parser.parseVerboseMoveStats(line);
+                if (parsed) stats.push(parsed);
+            });
+
+            engine.analyzePosition(position, { nodes: 200 }, () => {
+                // stats arrive after bestmove, give them a moment
+                setTimeout(() => {
+                    removeListener();
+                    expect(stats.length).to.be.greaterThan(0);
+
+                    const e4 = stats.find((s) => s.move === "e2e4");
+                    expect(e4).to.not.eq(undefined);
+                    expect(e4!.policy).to.be.greaterThan(0);
+                    expect(e4!.visits).to.be.greaterThan(0);
+
+                    engine.quit();
+                    done();
+                }, 500);
             });
         });
     });

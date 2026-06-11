@@ -1,6 +1,7 @@
 export { IAnalysis } from "./Analysis/IAnalysis";
 export { IPosition } from "./Analysis/IPosition";
 export { IResult } from "./Analysis/IResult";
+export { IMoveStats } from "./Analysis/IMoveStats";
 export { IScore } from "./Analysis/IScore";
 export { IWdl } from "./Analysis/IWdl";
 export { ISearchConfig } from "./Engine/ISearchConfig";
