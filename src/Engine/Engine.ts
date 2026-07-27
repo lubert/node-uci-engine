@@ -212,10 +212,11 @@ export class Engine {
    * @method
    * @param {string} name
    * @param {Function} callback
-   * @return {void}
+   * @return {Function} removeListener
    */
-  public once(name: string, callback: EventCallback): void {
+  public once(name: string, callback: EventCallback): () => void {
     this.handler.once(name, callback);
+    return () => this.handler.removeListener(name, callback);
   }
 
   /**
