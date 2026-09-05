@@ -1,5 +1,6 @@
 import { spawn, ChildProcess } from "child_process";
 import { EOL } from "os";
+import { dirname } from "path";
 
 /**
  * @class Process
@@ -19,7 +20,8 @@ export class Process {
    * @param {string} path
    */
   constructor(path: string) {
-    this._child = spawn(path);
+    // Engines resolve sidecar files (NNUE nets, books) against cwd.
+    this._child = spawn(path, { cwd: dirname(path) });
     this._child.on("error", (err) => {
       this._error = err;
     });
