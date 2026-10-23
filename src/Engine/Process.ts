@@ -61,19 +61,16 @@ export class Process {
    * @return {void}
    */
   public listen(callback: (output: string) => void): void {
-    this._child.stdout?.on(
-      "data",
-      function (this: Process, data: string[]): void {
-        const output: string[] = data
-          .toString()
-          .split(EOL)
-          .filter((x) => x);
-
-        for (let i = 0, length = output.length; i < length; i++) {
-          callback(output[i]);
-        }
-      },
-    );
+    // Engines pick their own line ending, and a read can end mid-line.
+    let partial = "";
+    this._child.stdout?.on("data", (data: Buffer | string): void => {
+      const lines = (partial + data.toString()).split("\n");
+      partial = lines.pop() ?? "";
+      for (const line of lines) {
+        const output = line.endsWith("\r") ? line.slice(0, -1) : line;
+        if (output) callback(output);
+      }
+    });
   }
 
   /**
