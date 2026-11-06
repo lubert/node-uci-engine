@@ -13,6 +13,26 @@ describe("Parser", (): void => {
             const result = Parser.parseBestMove('bestmove e2e4 ponder e7e5');
             expect(result).to.deep.eq(['e2e4', 'e7e5']);
         });
+
+        it("keeps a promotion on the move and the ponder", (): void => {
+            expect(Parser.parseBestMove('bestmove a7a8q')).to.deep.eq(['a7a8q', null]);
+            expect(Parser.parseBestMove('bestmove a7b8n ponder h2h1r')).to.deep.eq(['a7b8n', 'h2h1r']);
+        });
+
+        it("keeps a null move", (): void => {
+            expect(Parser.parseBestMove('bestmove (none)')).to.deep.eq([null, null]);
+        });
+    });
+
+    describe("parseCurrmove", () => {
+        it("plain move", (): void => {
+            expect(Parser.parseCurrmove('info depth 12 currmove e2e4 currmovenumber 1')).to.eq('e2e4');
+        });
+
+        it("keeps a promotion", (): void => {
+            expect(Parser.parseCurrmove('info depth 30 currmove c2c1q currmovenumber 1')).to.eq('c2c1q');
+            expect(Parser.parseCurrmove('info currmove h7h8b')).to.eq('h7h8b');
+        });
     });
 
     describe("parse Moves", (): void => {

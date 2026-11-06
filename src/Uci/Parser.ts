@@ -84,7 +84,7 @@ export class Parser {
     output: string,
   ): [string | null, string | null] | null {
     const matches = output.match(
-      /^(bestmove)(?:\s([a-h][1-8][a-h][1-8])(?:\sponder\s([a-h][1-8][a-h][1-8]))?)?/,
+      /^(bestmove)(?:\s([a-h][1-8][a-h][1-8][qrbn]?)(?:\sponder\s([a-h][1-8][a-h][1-8][qrbn]?))?)?/,
     );
 
     if (matches !== null) {
@@ -102,7 +102,7 @@ export class Parser {
    * @return {string|null}
    */
   public static parseCurrmove(output: string): string | null {
-    const matches = output.match(/currmove\s([a-h][1-8][a-h][1-8])/);
+    const matches = output.match(/currmove\s([a-h][1-8][a-h][1-8][qrbn]?)/);
 
     if (matches !== null) {
       return matches[1];
