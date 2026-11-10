@@ -35,6 +35,11 @@ describe("Parser", (): void => {
             expect(Parser.parseScore('info depth 18 score mate 3 lowerbound nodes 1000 pv e2e4')).to.deep.eq({ type: 'mate', value: 3, bound: 'lower' });
         });
 
+        it("keeps a bound printed after wdl", (): void => {
+            // Stockfish 16 with UCI_ShowWDL on.
+            expect(Parser.parseScore('info depth 23 seldepth 38 multipv 1 score cp 34 wdl 45 954 1 upperbound nodes 1000 nps 900000 time 5000 pv e2e4 e7e5')).to.deep.eq({ type: 'cp', value: 34, bound: 'upper' });
+        });
+
         it("no score", (): void => {
             expect(Parser.parseScore('info depth 12 currmove e2e4 currmovenumber 1')).to.eq(null);
         });

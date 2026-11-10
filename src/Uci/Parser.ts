@@ -61,17 +61,22 @@ export class Parser {
    * @return {Score|null}
    */
   public static parseScore(output: string): IScore | null {
-    const matches = output.match(
-      /score\s(\w+)\s([-\d+]+)(?:\s(lowerbound|upperbound))?/,
-    );
+    const matches = output.match(/score\s(\w+)\s([-\d+]+)/);
 
     if (matches !== null) {
       const score: IScore = {
         type: matches[1],
         value: parseInt(matches[2]),
       };
-      if (matches[3] === "lowerbound") score.bound = "lower";
-      if (matches[3] === "upperbound") score.bound = "upper";
+      // The flag need not follow the value (Stockfish prints wdl between
+      // them), so look anywhere after the score and before the pv.
+      const rest = output.slice(matches.index! + matches[0].length);
+      const pv = rest.search(/\spv\s/);
+      const bound = (pv < 0 ? rest : rest.slice(0, pv)).match(
+        /\s(lowerbound|upperbound)(?=\s|$)/,
+      );
+      if (bound?.[1] === "lowerbound") score.bound = "lower";
+      if (bound?.[1] === "upperbound") score.bound = "upper";
       return score;
     }
 
