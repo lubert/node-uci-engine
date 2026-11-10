@@ -61,13 +61,18 @@ export class Parser {
    * @return {Score|null}
    */
   public static parseScore(output: string): IScore | null {
-    const matches = output.match(/score\s(\w+)\s([-\d+]+)/);
+    const matches = output.match(
+      /score\s(\w+)\s([-\d+]+)(?:\s(lowerbound|upperbound))?/,
+    );
 
     if (matches !== null) {
-      return {
+      const score: IScore = {
         type: matches[1],
         value: parseInt(matches[2]),
       };
+      if (matches[3] === "lowerbound") score.bound = "lower";
+      if (matches[3] === "upperbound") score.bound = "upper";
+      return score;
     }
 
     return null;
@@ -359,7 +364,7 @@ export class Parser {
         name: matches[1],
         type: matches[2],
         // UCI sends `<empty>` as the empty-string sentinel; `null` means no default given
-        default: matches[3] === '<empty>' ? '' : matches[3] || null,
+        default: matches[3] === "<empty>" ? "" : matches[3] || null,
         vars: vars.length ? vars : null,
         min: matches[4] || null,
         max: matches[5] || null,

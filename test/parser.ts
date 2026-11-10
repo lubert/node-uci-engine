@@ -24,6 +24,22 @@ describe("Parser", (): void => {
         });
     });
 
+    describe("parseScore", () => {
+        it("an exact score has no bound", (): void => {
+            expect(Parser.parseScore('info depth 20 multipv 1 score cp 25 nodes 1000 pv e2e4')).to.deep.eq({ type: 'cp', value: 25 });
+            expect(Parser.parseScore('info depth 20 multipv 1 score mate -3 nodes 1000 pv e2e4')).to.deep.eq({ type: 'mate', value: -3 });
+        });
+
+        it("keeps a bound", (): void => {
+            expect(Parser.parseScore('info depth 35 seldepth 43 multipv 1 score cp 22 upperbound nodes 1000 pv e2e4')).to.deep.eq({ type: 'cp', value: 22, bound: 'upper' });
+            expect(Parser.parseScore('info depth 18 score mate 3 lowerbound nodes 1000 pv e2e4')).to.deep.eq({ type: 'mate', value: 3, bound: 'lower' });
+        });
+
+        it("no score", (): void => {
+            expect(Parser.parseScore('info depth 12 currmove e2e4 currmovenumber 1')).to.eq(null);
+        });
+    });
+
     describe("parseCurrmove", () => {
         it("plain move", (): void => {
             expect(Parser.parseCurrmove('info depth 12 currmove e2e4 currmovenumber 1')).to.eq('e2e4');
